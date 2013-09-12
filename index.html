@@ -20,61 +20,147 @@
 
       var end = [229308, 810334, 315994, 1530848, 575675, 269503, 1089753, 561199, 435270, 744905, 662927, 1077048, 923492, 1090013, 783287, 946852];
       var end_sum = d3.sum(end);
-      var data = [
-      {"code": "YAL069W", "start": 335, "end": 649},
-      {"code": "YAL068W-A", "start": 538, "end": 792},
-      {"code": "YAL068C", "start": 2169, "end": 1807},
-      {"code": "YAL067W-A", "start": 2480, "end": 2707},
-      {"code": "YAL067C", "start": 9017, "end": 7236},
-      {"code": "YAL066W", "start": 10092, "end": 10400},
-      {"code": "YAL065C", "start": 11952, "end": 11566},
-      {"code": "YAL064W-B", "start": 12047, "end": 12427},
-      {"code": "YAL064C-A", "start": 13744, "end": 13364},
-      {"code": "YAL064W", "start": 21526, "end": 21852}
-      ];
 
       var canvas = d3.select("body").append("svg");
       var group = canvas.append("g").attr("transform","translate(" + circle_horizontal_shift + ", " + circle_vertical_shift +")");
 
-      var chr_region = new Array(CHR_NUMBER);
+      var chr_region;
       var chr_set; 
-      var chr_set_start_angle;
-      var chr_set_end_angle;
+      var chr_start_angle;
+      var chr_end_angle;
       var chr_to_chr_gap = ((CHR_NUMBER * 10 / 180) / Math.PI) / 16; 
       var accumulator = 0;
-      var chr_set_start_end_angle = [];
+      var chr_start_angle_set = [];
+      var gene;
+
 
       for(var i = 0; i < CHR_NUMBER; i++) {
-	chr_set_start_angle = accumulator += chr_to_chr_gap;
-	chr_set_end_angle = accumulator += ((end[i] / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16));
-	chr_set_start_end_angle.push(chr_set_start_angle);
-	chr_set_start_end_angle.push(chr_set_end_angle);
-	chr_set = circle_radius.startAngle(chr_set_start_angle).endAngle(chr_set_end_angle);
-	chr_region[i] = group.append("g").attr("id", "chr_" + (i + 1) + "_region");
-	chr_region[i].append("path").attr("id", "chr_" + (i + 1) + "_set").attr("d", chr_set).attr("fill", "none").attr("stroke", "#000").attr("stroke-width", "0.2");
+	chr_start_angle = accumulator += chr_to_chr_gap;
+	chr_end_angle = accumulator += ((end[i] / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16));
+	chr_start_angle_set.push(chr_start_angle);
+	chr_set = circle_radius.startAngle(chr_start_angle).endAngle(chr_end_angle);
+	chr_region = group.append("g").attr("id", "chr_" + (i + 1) + "_region");
+	chr_region.append("path").attr("id", "chr_" + (i + 1) + "_set").attr("d", chr_set).attr("fill", "none").attr("stroke", "#000").attr("stroke-width", "0.2");
       }
 
-      var chr1 = circle_radius.startAngle(function(d) { return ( chr_set_start_end_angle[0] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-     				 .endAngle(function(d) { return ( chr_set_start_end_angle[0] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-      
-      chr_region[0].selectAll(".chr1").data(data).enter().append("path").attr("class", "chr1").attr("d", chr1).style("z-index", "10");
+      d3.json("data_factory/gene_location/chr1_gene_info.json", function(data) {
+	var chr = 1;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr2_gene_info.json", function(data) {
+	var chr = 2;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr3_gene_info.json", function(data) {
+	var chr = 3;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr4_gene_info.json", function(data) {
+	var chr = 4;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr5_gene_info.json", function(data) {
+	var chr = 5;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr6_gene_info.json", function(data) {
+	var chr = 6;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr7_gene_info.json", function(data) {
+	var chr = 7;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr8_gene_info.json", function(data) {
+	var chr = 8;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr9_gene_info.json", function(data) {
+	var chr = 9;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr10_gene_info.json", function(data) {
+	var chr = 10;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr11_gene_info.json", function(data) {
+	var chr = 11;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr12_gene_info.json", function(data) {
+	var chr = 12;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr13_gene_info.json", function(data) {
+	var chr = 13;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr15_gene_info.json", function(data) {
+	var chr = 14;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr14_gene_info.json", function(data) {
+	var chr = 15;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+      d3.json("data_factory/gene_location/chr16_gene_info.json", function(data) {
+	var chr = 16;
+	var gene = circle_radius
+	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
+      });
+
 
 
       //var radius = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius).startAngle(function(d) { return d.start/229308 }).endAngle(function(d) { return d.end/229308; });
 
       //group.selectAll("path").data(chr1).enter().append("path").attr("d", radius).attr("id", function(d) { return d.code; });
-
-
-
-
-
-
-
-
-
-
-
-
 
       //var radius_pie = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius); 
 
