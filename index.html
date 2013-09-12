@@ -34,7 +34,8 @@
 
       //Distrubute the region for each chromosome 
       var chr_region, chr_set, chr_start_angle, chr_end_angle;
-      var chr_to_chr_gap = ((CHR_NUMBER * 10 / 180) / Math.PI) / CHR_NUMBER; 
+      var gap_degree = 10;
+      var chr_to_chr_gap = ((CHR_NUMBER * gap_degree / 180) / Math.PI) / CHR_NUMBER; 
       var chr_start_angle_set = [];
       var accumulator = 0;
 
@@ -56,7 +57,7 @@
 	  var gene = circle_radius
 	  .startAngle(function(d) { return ( chr_start_angle_set[d.chr_num-1] + ((d.start / length_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
 	  .endAngle(function(d) { return ( chr_start_angle_set[d.chr_num-1] + ((d.end / length_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	  group.select("#chr_" + i + "_region").selectAll(".chr" + i).data(data).enter().append("path").attr("class", "chr" + i).attr("d", gene).attr("stroke", chr_color[i - 1]).attr("stroke-width", "0.08");
+	  group.select("#chr_" + i + "_region").selectAll(".chr" + i).data(data).enter().append("path").attr("class", "chr" + i).attr("id", function(d) { return d.code; }).attr("d", gene).attr("stroke", chr_color[i - 1]).attr("stroke-width", "0.08");
 	});
       }
     </script>
