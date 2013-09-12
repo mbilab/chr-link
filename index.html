@@ -5,11 +5,13 @@
     <meta charset="utf-8">
     <title>PPI</title>
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <style>
+    </style>
   </head>
   <body>
     <script>
-      var CHR_NUMBER = 16;
 
+      //Adjustable circle layout which base on the size of user's screen
       var client_view_width = window.innerWidth;
       var client_view_height = window.innerHeight;
       var outer_radius = client_view_height * 0.7 * 0.5;
@@ -18,163 +20,45 @@
       var circle_vertical_shift = client_view_height / 2;
       var circle_radius = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius);
 
-      var end = [229308, 810334, 315994, 1530848, 575675, 269503, 1089753, 561199, 435270, 744905, 662927, 1077048, 923492, 1090013, 783287, 946852];
-      var end_sum = d3.sum(end);
+      //Amounts of the chromosomes
+      var CHR_NUMBER = 16;
+      //16 kinds of color to fill to each chromosome
+      var chr_color = ["#D4C3A7", "#72783C", "#A8A24E", "#B53A3F", "#F32733", "#FE2488", "#F6D3D1", "#F4A441", "#FFC84D", "#F9E956", "#D4DF54", "#03AA58", "#2B954A", "#30368C", "#59A3D4", "#8FCAE8" ];
+      //The length of each chromosome
+      var length = [229308, 810334, 315994, 1530848, 575675, 269503, 1089753, 561199, 435270, 744905, 662927, 1077048, 923492, 783287, 1090013, 946852];
+      var length_sum = d3.sum(length);
 
+      //The foundation of the circle layout
       var canvas = d3.select("body").append("svg");
       var group = canvas.append("g").attr("transform","translate(" + circle_horizontal_shift + ", " + circle_vertical_shift +")");
 
-      var chr_region;
-      var chr_set; 
-      var chr_start_angle;
-      var chr_end_angle;
-      var chr_to_chr_gap = ((CHR_NUMBER * 10 / 180) / Math.PI) / 16; 
-      var accumulator = 0;
+      //Distrubute the region for each chromosome 
+      var chr_region, chr_set, chr_start_angle, chr_end_angle;
+      var chr_to_chr_gap = ((CHR_NUMBER * 10 / 180) / Math.PI) / CHR_NUMBER; 
       var chr_start_angle_set = [];
-      var gene;
-
+      var accumulator = 0;
 
       for(var i = 0; i < CHR_NUMBER; i++) {
 	chr_start_angle = accumulator += chr_to_chr_gap;
-	chr_end_angle = accumulator += ((end[i] / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16));
+	chr_end_angle = accumulator += ((length[i] / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER));
 	chr_start_angle_set.push(chr_start_angle);
 	chr_set = circle_radius.startAngle(chr_start_angle).endAngle(chr_end_angle);
 	chr_region = group.append("g").attr("id", "chr_" + (i + 1) + "_region");
-	chr_region.append("path").attr("id", "chr_" + (i + 1) + "_set").attr("d", chr_set).attr("fill", "none").attr("stroke", "#000").attr("stroke-width", "0.2");
+	chr_region.append("path").attr("id", "chr_" + (i + 1) + "_set").attr("d", chr_set).attr("fill", "none").attr("stroke", "#000").attr("stroke-width", "2");
       }
 
-      d3.json("data_factory/gene_location/chr1_gene_info.json", function(data) {
-	var chr = 1;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr2_gene_info.json", function(data) {
-	var chr = 2;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr3_gene_info.json", function(data) {
-	var chr = 3;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr4_gene_info.json", function(data) {
-	var chr = 4;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr5_gene_info.json", function(data) {
-	var chr = 5;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr6_gene_info.json", function(data) {
-	var chr = 6;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr7_gene_info.json", function(data) {
-	var chr = 7;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr8_gene_info.json", function(data) {
-	var chr = 8;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr9_gene_info.json", function(data) {
-	var chr = 9;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr10_gene_info.json", function(data) {
-	var chr = 10;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr11_gene_info.json", function(data) {
-	var chr = 11;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr12_gene_info.json", function(data) {
-	var chr = 12;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr13_gene_info.json", function(data) {
-	var chr = 13;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr15_gene_info.json", function(data) {
-	var chr = 14;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr14_gene_info.json", function(data) {
-	var chr = 15;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-      d3.json("data_factory/gene_location/chr16_gene_info.json", function(data) {
-	var chr = 16;
-	var gene = circle_radius
-	.startAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	.endAngle(function(d) { return ( chr_start_angle_set[chr-1] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	group.select("#chr_" + chr + "_region").selectAll(".chr" + chr).data(data).enter().append("path").attr("class", "chr" + chr).attr("d", gene);
-      });
-
-
-
-      //var radius = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius).startAngle(function(d) { return d.start/229308 }).endAngle(function(d) { return d.end/229308; });
-
-      //group.selectAll("path").data(chr1).enter().append("path").attr("d", radius).attr("id", function(d) { return d.code; });
-
-      //var radius_pie = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius); 
-
-      //var pie = d3.layout.pie().value(function(d) { return d; }).sort(null);
-
-      //var chr = group.selectAll(".chr").data(pie(end)).enter().append("g").attr("class", function(d, i) { return "chr_" + (i + 1)});
-
-      //chr.append("path").attr("d", radius_pie).attr("fill", "#FFF").attr("stroke","#000").attr("stroke-width", "0.3px");
-
-      //aaa.select(".chr_1").data(chr1).enter().append("path").attr("class", "chr_1").attr("d", function(d, i) { console.log(d); console.log(i);});;
-
-
-
-
+      //Draw every genes on their coresponding chromosome region
+      for(var i = 1; i <= CHR_NUMBER; i++) { 
+	draw_gene(i);
+      }
+      function draw_gene(i) {
+	d3.json("data/gene_location/chr" + i + "_gene_info.json", function(data) {
+	  var gene = circle_radius
+	  .startAngle(function(d) { return ( chr_start_angle_set[d.chr_num-1] + ((d.start / length_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+	  .endAngle(function(d) { return ( chr_start_angle_set[d.chr_num-1] + ((d.end / length_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	  group.select("#chr_" + i + "_region").selectAll(".chr" + i).data(data).enter().append("path").attr("class", "chr" + i).attr("d", gene).attr("stroke", chr_color[i - 1]).attr("stroke-width", "0.08");
+	});
+      }
     </script>
   </body>
 </html>

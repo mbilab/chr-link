@@ -10,8 +10,8 @@ my @array;
 my $tmp;
 
 for($i = 0; $i < $CHR_NUMBER; $i++) {
-  open READ_FILE, "< ../original_data/chr/chr".($i + 1).".gene";
-  open WRITE_FILE, "> chr".($i + 1)."_gene_info.json";
+  open READ_FILE, "< ./origin/chr/chr".($i + 1).".gene";
+  open WRITE_FILE, "> ./gene_location/chr".($i + 1)."_gene_info.json";
   print WRITE_FILE "[\n";
   $tmp = 0;
   while($line = <READ_FILE>) {
@@ -29,9 +29,7 @@ for($i = 0; $i < $CHR_NUMBER; $i++) {
     print WRITE_FILE "\"start\":".$array[2].", ";
     print WRITE_FILE "\"end\":".$array[3]."}";
   }
-
   print WRITE_FILE "\n]";
-
   close READ_FILE;
   close WRITE_FILE;
 }
