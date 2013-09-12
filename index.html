@@ -8,30 +8,84 @@
   </head>
   <body>
     <script>
+      var CHR_NUMBER = 16;
+
       var client_view_width = window.innerWidth;
       var client_view_height = window.innerHeight;
       var outer_radius = client_view_height * 0.7 * 0.5;
       var inner_radius = outer_radius * 0.8;
       var circle_horizontal_shift = client_view_width /2;
       var circle_vertical_shift = client_view_height / 2;
+      var circle_radius = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius);
 
       var end = [229308, 810334, 315994, 1530848, 575675, 269503, 1089753, 561199, 435270, 744905, 662927, 1077048, 923492, 1090013, 783287, 946852];
       var end_sum = d3.sum(end);
-      end.forEach(function(element, i) {
-	end[i] = element/end_sum;
-      });
+      var data = [
+      {"code": "YAL069W", "start": 335, "end": 649},
+      {"code": "YAL068W-A", "start": 538, "end": 792},
+      {"code": "YAL068C", "start": 2169, "end": 1807},
+      {"code": "YAL067W-A", "start": 2480, "end": 2707},
+      {"code": "YAL067C", "start": 9017, "end": 7236},
+      {"code": "YAL066W", "start": 10092, "end": 10400},
+      {"code": "YAL065C", "start": 11952, "end": 11566},
+      {"code": "YAL064W-B", "start": 12047, "end": 12427},
+      {"code": "YAL064C-A", "start": 13744, "end": 13364},
+      {"code": "YAL064W", "start": 21526, "end": 21852}
+      ];
 
       var canvas = d3.select("body").append("svg");
-
       var group = canvas.append("g").attr("transform","translate(" + circle_horizontal_shift + ", " + circle_vertical_shift +")");
 
-      var radius = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius);
+      var chr_region = new Array(CHR_NUMBER);
+      var chr_set; 
+      var chr_set_start_angle;
+      var chr_set_end_angle;
+      var chr_to_chr_gap = ((CHR_NUMBER * 10 / 180) / Math.PI) / 16; 
+      var accumulator = 0;
+      var chr_set_start_end_angle = [];
 
-      var pie = d3.layout.pie().value(function(d) { return d; }).sort(null);
+      for(var i = 0; i < CHR_NUMBER; i++) {
+	chr_set_start_angle = accumulator += chr_to_chr_gap;
+	chr_set_end_angle = accumulator += ((end[i] / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16));
+	chr_set_start_end_angle.push(chr_set_start_angle);
+	chr_set_start_end_angle.push(chr_set_end_angle);
+	chr_set = circle_radius.startAngle(chr_set_start_angle).endAngle(chr_set_end_angle);
+	chr_region[i] = group.append("g").attr("id", "chr_" + (i + 1) + "_region");
+	chr_region[i].append("path").attr("id", "chr_" + (i + 1) + "_set").attr("d", chr_set).attr("fill", "none").attr("stroke", "#000").attr("stroke-width", "0.2");
+      }
 
-      var chr = group.selectAll(".chr").data(pie(end)).enter().append("g").attr("class", function(d, i) { return "chr_" + (i + 1)});
+      var chr1 = circle_radius.startAngle(function(d) { return ( chr_set_start_end_angle[0] + ((d.start / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
+     				 .endAngle(function(d) { return ( chr_set_start_end_angle[0] + ((d.end / end_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+      
+      chr_region[0].selectAll(".chr1").data(data).enter().append("path").attr("class", "chr1").attr("d", chr1).style("z-index", "10");
 
-      var chrs = chr.append("path").attr("d", radius).attr("fill", "#FFF").attr("stroke","#000").attr("stroke-width", "0.3px");
+
+      //var radius = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius).startAngle(function(d) { return d.start/229308 }).endAngle(function(d) { return d.end/229308; });
+
+      //group.selectAll("path").data(chr1).enter().append("path").attr("d", radius).attr("id", function(d) { return d.code; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+      //var radius_pie = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius); 
+
+      //var pie = d3.layout.pie().value(function(d) { return d; }).sort(null);
+
+      //var chr = group.selectAll(".chr").data(pie(end)).enter().append("g").attr("class", function(d, i) { return "chr_" + (i + 1)});
+
+      //chr.append("path").attr("d", radius_pie).attr("fill", "#FFF").attr("stroke","#000").attr("stroke-width", "0.3px");
+
+      //aaa.select(".chr_1").data(chr1).enter().append("path").attr("class", "chr_1").attr("d", function(d, i) { console.log(d); console.log(i);});;
+
 
 
 
