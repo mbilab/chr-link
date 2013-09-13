@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html>
   <head>
     <meta charset="utf-8">
     <title>PPI</title>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
     <style>
     </style>
   </head>
@@ -12,32 +11,34 @@
     <script>
 
       //Adjustable circle layout which base on the size of user's screen
-      var client_view_width = window.innerWidth;
-      var client_view_height = window.innerHeight;
-      var outer_radius = client_view_height * 0.7 * 0.5;
-      var inner_radius = outer_radius * 0.8;
-      var circle_horizontal_shift = client_view_width /2;
-      var circle_vertical_shift = client_view_height / 2;
-      var circle_radius = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius);
+      var client_view_width = window.innerWidth,
+      client_view_height = window.innerHeight,
+      outer_radius = client_view_height * 0.7 * 0.5,
+      inner_radius = outer_radius * 0.8,
+      circle_horizontal_shift = client_view_width /2,
+      circle_vertical_shift = client_view_height / 2,
+      circle_radius = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius);
 
-      //Amounts of the chromosomes
-      var CHR_NUMBER = 16;
-      //16 kinds of color to fill to each chromosome
-      var chr_color = ["#D4C3A7", "#72783C", "#A8A24E", "#B53A3F", "#F32733", "#FE2488", "#F6D3D1", "#F4A441", "#FFC84D", "#F9E956", "#D4DF54", "#03AA58", "#2B954A", "#30368C", "#59A3D4", "#8FCAE8" ];
-      //The length of each chromosome
-      var length = [229308, 810334, 315994, 1530848, 575675, 269503, 1089753, 561199, 435270, 744905, 662927, 1077048, 923492, 783287, 1090013, 946852];
-      var length_sum = d3.sum(length);
+      //Amounts of the chromosomes, the length of each chromosome
+      var CHR_NUMBER = 16,
+
+      //16 kinds of color for fillng to each chromosome
+      chr_color = ["#D4C3A7", "#72783C", "#A8A24E", "#B53A3F", "#F32733", "#FE2488", "#F6D3D1", "#F4A441", "#FFC84D", "#F9E956", "#D4DF54", "#03AA58", "#2B954A", "#30368C", "#59A3D4", "#8FCAE8" ],
+
+      //Length of each chromosome
+      length = [229308, 810334, 315994, 1530848, 575675, 269503, 1089753, 561199, 435270, 744905, 662927, 1077048, 923492, 783287, 1090013, 946852],
+      length_sum = d3.sum(length);
 
       //The foundation of the circle layout
-      var canvas = d3.select("body").append("svg");
-      var group = canvas.append("g").attr("transform","translate(" + circle_horizontal_shift + ", " + circle_vertical_shift +")");
+      var canvas = d3.select("body").append("svg"),
+      group = canvas.append("g").attr("transform","translate(" + circle_horizontal_shift + ", " + circle_vertical_shift +")");
 
       //Distrubute the region for each chromosome 
-      var chr_region, chr_set, chr_start_angle, chr_end_angle;
-      var gap_degree = 10;
-      var chr_to_chr_gap = ((CHR_NUMBER * gap_degree / 180) / Math.PI) / CHR_NUMBER; 
-      var chr_start_angle_set = [];
-      var accumulator = 0;
+      var chr_region, chr_set, chr_start_angle, chr_end_angle,
+      gap_degree = 5,
+      chr_to_chr_gap = ((CHR_NUMBER * gap_degree / 180) / Math.PI) / CHR_NUMBER,
+      chr_start_angle_set = [],
+      accumulator = 0;
 
       for(var i = 0; i < CHR_NUMBER; i++) {
 	chr_start_angle = accumulator += chr_to_chr_gap;
@@ -57,9 +58,13 @@
 	  var gene = circle_radius
 	  .startAngle(function(d) { return ( chr_start_angle_set[d.chr_num-1] + ((d.start / length_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
 	  .endAngle(function(d) { return ( chr_start_angle_set[d.chr_num-1] + ((d.end / length_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
-	  group.select("#chr_" + i + "_region").selectAll(".chr" + i).data(data).enter().append("path").attr("class", "chr" + i).attr("id", function(d) { return d.code; }).attr("d", gene).attr("stroke", chr_color[i - 1]).attr("stroke-width", "0.08");
+	  group.select("#chr_" + i + "_region").selectAll(".chr" + i).data(data).enter().append("path").attr("class", "chr" + i).attr("id", function(d) { return d.code; }).attr("stroke", chr_color[i - 1]).attr("d", gene).attr("stroke-width", "0.08");
 	});
       }
+
+
+
+
     </script>
   </body>
 </html>
