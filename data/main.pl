@@ -20,7 +20,7 @@ my $position_count = 0;
 print "\nPart 1: Create the series of informatic file.\n";
 for($i = 0; $i < $CHR_NUMBER; $i++) {
   open READ_FILE, "< ./origin/chr/chr".($i + 1).".gene";
-  open WRITE_FILE, "> ./gene_location/chr".($i + 1)."_gene_info.json";
+  open WRITE_FILE, "> ./info/chr".($i + 1)."_gene_info.json";
 
   print WRITE_FILE "[\n";
   $first = 0;
@@ -98,32 +98,37 @@ my $k;
 
 print "\n\tWriring files...\n";
 for($k = 0; $k < $CHR_NUMBER; $k++) {
-  open WRITE_FILE, "> ./chr".($k + 1)."_gene_link.json";
+  open WRITE_FILE, "> ./link/chr".($k + 1)."_gene_link.json";
   print WRITE_FILE "[\n";
   for($i = $link_list_range[$k]; $i < $link_list_range[$k + 1]; $i++){
     @link = split("\t", $link_list[$i]);
-    if($i == $link_list_range[$k]) {
-      print WRITE_FILE "{";
-    }
-    else{
-      print WRITE_FILE ",\n{";
-    }
-    for($j = $info_list_range[$link[0] - 1]; $j < $info_list_range[$link[0]]; $j++) { 
-      @info = split("\t", $info_list[$j]);
-      if($link[0] eq $info[0] && $link[1] eq $info[1]){
-	print WRITE_FILE "\"s_chr_num\":".$link[0].", \"s_gene\":\"".$link[1]."\", \"s_start\":".$info[2].", \"s_end\":".$info[3];
+    if($link[0] != $link[2]){
+      if($i == $link_list_range[$k]) {
+	print WRITE_FILE "{";
       }
-    }
-    for($j = $info_list_range[$link[2] - 1]; $j < $info_list_range[$link[2]]; $j++) { 
-      @info = split("\t", $info_list[$j]);
-      if($link[2] eq $info[0] && $link[3] eq $info[1]){
-	print WRITE_FILE ", \"t_chr_num\":".$link[2].", \"t_gene\":\"".$link[3]."\", \"t_start\":".$info[2].", \"t_end\":".$info[3]."}";
+      else{
+	print WRITE_FILE ",\n{";
+      }
+      for($j = $info_list_range[$link[0] - 1]; $j < $info_list_range[$link[0]]; $j++) { 
+	@info = split("\t", $info_list[$j]);
+	if($link[0] eq $info[0] && $link[1] eq $info[1]){
+	  print WRITE_FILE "\"s_chr_num\":".$link[0].", \"s_gene\":\"".$link[1]."\", \"s_start\":".$info[2].", \"s_end\":".$info[3];
+	}
+      }
+      for($j = $info_list_range[$link[2] - 1]; $j < $info_list_range[$link[2]]; $j++) { 
+	@info = split("\t", $info_list[$j]);
+	if($link[2] eq $info[0] && $link[3] eq $info[1]){
+	  print WRITE_FILE ", \"t_chr_num\":".$link[2].", \"t_gene\":\"".$link[3]."\", \"t_start\":".$info[2].", \"t_end\":".$info[3]."}";
+	}
       }
     }
   }
   print WRITE_FILE "\n]";
   close WRITE_FILE;
+  print "\n\t\tchr".($k + 1)."_gene_link.json is created.";
 }
+
+print "\n\n";
 
 
 sub number_to_letter {
