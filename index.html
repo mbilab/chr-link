@@ -22,14 +22,14 @@
       circle_radius = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius);
 
       //Amounts of the chromosomes
-      var CHR_NUMBER = 16,
+      var CHR_NUMBER = 16;
 
       //16 kinds of color for fillng to each chromosome
-      chr_color = ["#D4C3A7", "#72783C", "#A8A24E", "#B53A3F", "#F32733", "#FE2488", "#F6D3D1", "#F4A441", "#FFC84D", "#F9E956", "#D4DF54", "#03AA58", "#2B954A", "#30368C", "#59A3D4", "#8FCAE8" ],
+      var chr_color = ["#D4C3A7", "#72783C", "#A8A24E", "#B53A3F", "#F32733", "#FE2488", "#F6D3D1", "#F4A441", "#FFC84D", "#F9E956", "#D4DF54", "#03AA58", "#2B954A", "#30368C", "#59A3D4", "#8FCAE8" ];
 
       //Length of each chromosome
-      length = [229308, 810334, 315994, 1530848, 575675, 269503, 1089753, 561199, 435270, 744905, 662927, 1077048, 923492, 783287, 1090013, 946852],
-      length_sum = d3.sum(length);
+      var length = [229308, 810334, 315994, 1530848, 575675, 269503, 1089753, 561199, 435270, 744905, 662927, 1077048, 923492, 783287, 1090013, 946852];
+      var length_sum = d3.sum(length);
 
       //The foundation of the circle layout
       var canvas = d3.select("body").append("svg"),
@@ -43,12 +43,22 @@
       accumulator = 0;
 
       for(var i = 0; i < CHR_NUMBER; i++) {
+
 	chr_start_angle = accumulator += chr_to_chr_gap;
 	chr_end_angle = accumulator += ((length[i] / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER));
 	chr_start_angle_set.push(chr_start_angle);
 	chr_set = circle_radius.startAngle(chr_start_angle).endAngle(chr_end_angle);
-	chr_region = group.append("g").attr("id", "chr_" + (i + 1) + "_region").style("cursor", "pointer").attr("onclick","show_line(" + (i + 1) +")").attr("title", "chr " + (i + 1));
-	chr_region.append("path").attr("id", "chr_" + (i + 1) + "_set").attr("d", chr_set).attr("fill", "none").attr("stroke", "#000").attr("stroke-width", "2");
+
+	chr_region = group.append("g").attr("id", "chr_" + (i + 1) + "_region")
+	.style("cursor", "pointer")
+	.attr("onclick","show_line(" + (i + 1) +")")
+	.attr("title", "chr " + (i + 1));
+
+	chr_region.append("path").attr("id", "chr_" + (i + 1) + "_set")
+	.attr("d", chr_set)
+	.attr("fill", "none")
+	.attr("stroke", "#000")
+	.attr("stroke-width", "2");
       }
 
       //Draw every genes on their coresponding chromosome region
@@ -57,13 +67,19 @@
       }
       function draw_gene(i) {
 	d3.json("data/info/chr" + i + "_gene_info.json", function(data) {
+
 	  var gene = circle_radius
-	  .startAngle(function(d) { return ( chr_start_angle_set[d.chr_num-1] + ((d.start / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER)) ); })
-	  .endAngle(function(d) { return ( chr_start_angle_set[d.chr_num-1] + ((d.end / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER)) ); });
-	  group.select("#chr_" + i + "_region").selectAll(".chr" + i).data(data).enter().append("path").attr("class", "chr" + i).attr("id", function(d) { return d.code; }).attr("stroke", chr_color[i - 1]).attr("d", gene).attr("stroke-width", "0.08");
+	  .startAngle(function(d) { return convert_to_angle(d.chr_num, d.start); })
+	  .endAngle(function(d) { return convert_to_angle(d.chr_num, d.end); });
+
+	  group.select("#chr_" + i + "_region").selectAll(".chr" + i).data(data).enter().append("path").attr("class", "chr" + i)
+	  .attr("id", function(d) { return d.code; })
+	  .attr("stroke", chr_color[i - 1])
+	  .attr("d", gene)
+	  .attr("stroke-width", "0.08");
+
 	});
       }
-
 
       //Draw the line of the relationship
       for(var i = 1; i <= CHR_NUMBER; i++) { 
@@ -71,17 +87,28 @@
       }
       function sketch_line(i) {
 	d3.json("./data/link/chr" + i +"_gene_link.json", function(data) {
-	  var line = d3.svg.line.radial().interpolate("basis").radius(function(d, i) { if(i == 1 || i == 2) { return inner_radius * 0.6; } else { return inner_radius; } }).angle(function(d) { return d; });
-	  group.select("#chr_"+ i + "_region").append("g").attr("id", "chr" + i + "_line_set").attr("display", function() { if(i == 1) { return "block"} else { return "none" } }).selectAll("path").data(data).enter().append("path").attr("class", "chr" + i + "_line").attr("d", function(d){
-	    var start = convert_to_angle(d.s_chr_num, d.s_start, d.s_end);
-	    var end = convert_to_angle(d.t_chr_num, d.t_start, d.t_end);
-	    return line([start, start, end, end]); 
-	  }).attr("stroke", "#000").attr("stroke-width", "0.08").attr("stroke", function(d) { return chr_color[d.t_chr_num - 1]; } ).attr("fill", "none");
 
+	  var line = d3.svg.line.radial().interpolate("basis")
+	  .radius(function(d, i) { if(i == 1 || i == 2) { return inner_radius * 0.6; } else { return inner_radius; } })
+	  .angle(function(d) { return d; });
+
+	  group.select("#chr_"+ i + "_region").append("g").attr("id", "chr" + i + "_line_set")
+	  .attr("display", function() { if(i == 1) { return "block"} else { return "none" } })
+	  .selectAll("path").data(data).enter().append("path").attr("class", "chr" + i + "_line")
+	  .attr("d", function(d){
+	    var start = convert_to_angle(d.s_chr_num, (d.s_start + d.s_end) * 0.5 );
+	    var end = convert_to_angle(d.t_chr_num, (d.t_start + d.t_end ) * 0.5 );
+	    return line([start, start, end, end]); 
+	  })
+	  .attr("stroke", "#000")
+	  .attr("stroke-width", "0.08")
+	  .attr("stroke", function(d) { return chr_color[d.t_chr_num - 1]; } )
+	  .attr("fill", "none");
 	});
+
       }
-      function convert_to_angle(num, start, end) {
-	return chr_start_angle_set[num - 1] + ((((start + end) / 2) / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER));
+      function convert_to_angle(num, position) {
+	return chr_start_angle_set[num - 1] + (( position / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER));
       }
 
       //interaction with client
@@ -95,7 +122,6 @@
 	  }
 	}
       }
-
 
       /*
       data = [

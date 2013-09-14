@@ -1,5 +1,4 @@
 [
-,
 {"s_chr_num":2, "s_gene":"YBL001C", "s_start":237469, "s_end":237155, "t_chr_num":3, "t_gene":"YCL037C", "t_start":58678, "t_end":57374},
 {"s_chr_num":2, "s_gene":"YBL001C", "s_start":237469, "s_end":237155, "t_chr_num":4, "t_gene":"YDR213W", "t_start":889748, "t_end":892489},
 {"s_chr_num":2, "s_gene":"YBL001C", "s_start":237469, "s_end":237155, "t_chr_num":4, "t_gene":"YDR515W", "t_start":1473421, "t_end":1474764},
