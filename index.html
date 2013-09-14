@@ -5,6 +5,7 @@
     <title>PPI</title>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <style>
+      body { overflow: scroll; }
     </style>
   </head>
   <body>
@@ -13,13 +14,13 @@
       //Adjustable circle layout which base on the size of user's screen
       var client_view_width = window.innerWidth,
       client_view_height = window.innerHeight,
-      outer_radius = client_view_height * 0.7 * 0.5,
+      outer_radius = client_view_height * 0.8 * 0.5,
       inner_radius = outer_radius * 0.8,
       circle_horizontal_shift = client_view_width /2,
       circle_vertical_shift = client_view_height / 2,
       circle_radius = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius);
 
-      //Amounts of the chromosomes, the length of each chromosome
+      //Amounts of the chromosomes
       var CHR_NUMBER = 16,
 
       //16 kinds of color for fillng to each chromosome
@@ -35,7 +36,7 @@
 
       //Distrubute the region for each chromosome 
       var chr_region, chr_set, chr_start_angle, chr_end_angle,
-      gap_degree = 5,
+      gap_degree = 20,
       chr_to_chr_gap = ((CHR_NUMBER * gap_degree / 180) / Math.PI) / CHR_NUMBER,
       chr_start_angle_set = [],
       accumulator = 0;
@@ -54,16 +55,68 @@
 	draw_gene(i);
       }
       function draw_gene(i) {
-	d3.json("data/gene_location/chr" + i + "_gene_info.json", function(data) {
+	d3.json("data/info/chr" + i + "_gene_info.json", function(data) {
 	  var gene = circle_radius
-	  .startAngle(function(d) { return ( chr_start_angle_set[d.chr_num-1] + ((d.start / length_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); })
-	  .endAngle(function(d) { return ( chr_start_angle_set[d.chr_num-1] + ((d.end / length_sum) * (2 * Math.PI - chr_to_chr_gap * 16)) ); });
+	  .startAngle(function(d) { return ( chr_start_angle_set[d.chr_num-1] + ((d.start / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER)) ); })
+	  .endAngle(function(d) { return ( chr_start_angle_set[d.chr_num-1] + ((d.end / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER)) ); });
 	  group.select("#chr_" + i + "_region").selectAll(".chr" + i).data(data).enter().append("path").attr("class", "chr" + i).attr("id", function(d) { return d.code; }).attr("stroke", chr_color[i - 1]).attr("d", gene).attr("stroke-width", "0.08");
 	});
       }
 
 
+      //Draw the line of the relationship
 
+
+      /* data = [
+      {"s_chr_num":1, "s_gene":"YAL001C", "s_start":151168, "s_end":147596, "t_chr_num":2, "t_gene":"YBR009C", "t_start":255682, "t_end":255371},
+      {"s_chr_num":1, "s_gene":"YAR042W", "s_start":192613, "s_end":196179, "t_chr_num":4, "t_gene":"YDR062W", "t_start":576471, "t_end":578156},
+      {"s_chr_num":1, "s_gene":"YAL012W", "s_start":130802, "s_end":131986, "t_chr_num":7, "t_gene":"YGL122C", "t_start":280529, "t_end":278952},
+      {"s_chr_num":1, "s_gene":"YAR042W", "s_start":192613, "s_end":196179, "t_chr_num":13, "t_gene":"YMR202W", "t_start":667536, "t_end":668204}
+      ];*/
+
+      d3.json("./data/link/chr1_gene_link.json", function(data) {
+	var line = d3.svg.line.radial().interpolate("basis").radius(function(d, i) { if(i == 1 || i == 2) { return inner_radius * 0.6; } else { return inner_radius; } }).angle(function(d) { return d; });
+
+	group.select("#chr_1_region").selectAll(".wonder").data(data).enter().append("path").attr("d", function(d){
+	  var start = convert_to_angle(d.s_chr_num, d.s_start, d.s_end);
+	  var end = convert_to_angle(d.t_chr_num, d.t_start, d.t_end);
+	  return line([start, start, end, end]); 
+	}).attr("stroke", "#000").attr("stroke-width", "0.1").attr("stroke", function(d) { return chr_color[d.t_chr_num - 1]; } ).attr("fill", "none");
+
+      });
+
+      function convert_to_angle(num, start, end) {
+	return chr_start_angle_set[num - 1] + ((((start + end) / 2) / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER));
+      }
+
+      /*
+      group.select("#chr_1_region").selectAll(".wonder").data(data).enter().append("svg:line")
+      .attr("x1",function(d) { return x_locate(d.s_chr_num, d.s_start, d.s_end); })
+      .attr("y1",function(d) { return y_locate(d.s_chr_num, d.s_start, d.s_end); })
+      .attr("x2",function(d) { return x_locate(d.t_chr_num, d.t_start, d.t_end); })
+      .attr("y2",function(d) { return y_locate(d.t_chr_num, d.t_start, d.t_end); }).attr("stroke", "#000");
+
+
+      function x_locate(num, start, end) {
+	console.log("\nthis is x, " + num + ", " + start + ", " + end);
+	var middle = (start + end) / 2;
+	console.log("middle:" + middle);
+	var angle = chr_start_angle_set[num - 1] + ((middle / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER));
+	console.log("angle:" + angle);
+	console.log("cos: " + Math.cos(angle));
+	return Math.cos(angle) * inner_radius;
+      }
+      function y_locate(num, start, end) {
+	console.log("\nthis is x, " + num + ", " + start + ", " + end);
+	var middle = (start + end) / 2;
+	console.log("middle:" + middle);
+	var angle = chr_start_angle_set[num - 1] + ((middle / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER));
+	console.log("angle:" + angle);
+	console.log("cos: " + Math.sin(angle));
+	return Math.sin(angle) * inner_radius;
+      }
+
+      */
 
     </script>
   </body>
