@@ -11,19 +11,19 @@
     <div id="page">
       <div id="circle"></div>
       <div id="s_to_s_tablet">
-	<p>Single-to-Single Link</p>
-	<input type="text" name="s_to_s_string" placeholder="Typing the pair..." /><br />
-	<span>ex: 1-2, 4-3, ...</span>
-	<button id="s_to_s_submit_linking" onclick="s_to_s_link()">Link</button><button id="s_to_s_reset" onclick="s_to_s_reset()">Reset</button>
+	<p class="block_title">Single-to-Single Link<button class="functional_button" onclick="s_to_s_reset()">Reset</button></p><hr />
+	<input type="text" name="s_to_s_string" placeholder="Typing the pair (ex: 1-2, 3-4, ...)" />
+	<button class="functional_button" onclick="s_to_s_link()">Link</button>
       </div>
       <div id="m_to_m_tablet">
-	<p>Multiple-to-Multiple Link</p>
+	<p class="block_title">Multiple-to-Multiple Link<button class="functional_button" onclick="m_to_m_reset()">Reset</button></p><hr />
 	<div id="source_block">
 	  <center><p>Source</p></center>
 	  <button id="s_1" class="s_number" onclick="number_button('s_1')">1</button><button id="s_2" class="s_number" onclick="number_button('s_2')">2</button><button id="s_3" class="s_number" onclick="number_button('s_3')">3</button><button id="s_4" class="s_number" onclick="number_button('s_4')">4</button><br />
 	  <button id="s_5" class="s_number" onclick="number_button('s_5')">5</button><button id="s_6" class="s_number" onclick="number_button('s_6')">6</button><button id="s_7" class="s_number" onclick="number_button('s_7')">7</button><button id="s_8" class="s_number" onclick="number_button('s_8')">8</button><br />
 	  <button id="s_9" class="s_number" onclick="number_button('s_9')">9</button><button id="s_10" class="s_number" onclick="number_button('s_10')">10</button><button id="s_11" class="s_number" onclick="number_button('s_11')">11</button><button id="s_12" class="s_number" onclick="number_button('s_12')">12</button><br />
 	  <button id="s_13" class="s_number" onclick="number_button('s_13')">13</button><button id="s_14" class="s_number" onclick="number_button('s_14')">14</button><button id="s_15" class="s_number" onclick="number_button('s_15')">15</button><button id="s_16" class="s_number" onclick="number_button('s_16')">16</button><br />
+	  <button id="s_a" class="all_button" onclick="all_button('s')">All</button>
 	</div>
 	<div id="target_block">
 	  <center><p>Target</p></center>
@@ -31,124 +31,12 @@
 	  <button id="t_5" class="t_number" onclick="number_button('t_5')">5</button><button id="t_6" class="t_number" onclick="number_button('t_6')">6</button><button id="t_7" class="t_number" onclick="number_button('t_7')">7</button><button id="t_8" class="t_number" onclick="number_button('t_8')">8</button><br />
 	  <button id="t_9" class="t_number" onclick="number_button('t_9')">9</button><button id="t_10" class="t_number" onclick="number_button('t_10')">10</button><button id="t_11" class="t_number" onclick="number_button('t_11')">11</button><button id="t_12" class="t_number" onclick="number_button('t_12')">12</button><br />
 	  <button id="t_13" class="t_number" onclick="number_button('t_13')">13</button><button id="t_14" class="t_number" onclick="number_button('t_14')">14</button><button id="t_15" class="t_number" onclick="number_button('t_15')">15</button><button id="t_16" class="t_number" onclick="number_button('t_16')">16</button><br />
+	  <button id="t_a" class="all_button" onclick="all_button('t')">All</button>
 	</div>
-	  <button id="s_a" class="control_all" onclick="all_button('s')">All</button><button id="m_to_m_reset" onclick="m_to_m_reset()">Reset</button><button id="t_a" class="control_all" onclick="all_button('t')">All</button>
-      </div>
+	      </div>
     </div>
 
     <script>
-      var s_tunnel = [],
-      t_tunnel = [];
-      function number_button(signal) {
-	if($("#"+signal).css("background-color") == "rgb(255, 255, 255)") {
-	  $("#"+signal).css("background-color", "#606c88").css("color", "White");
-	  tunnel_add(signal);
-	}
-	else {
-	  $("#"+signal).css("background-color", "#FFF").css("color", "#666");
-	  tunnel_delete(signal);
-	}
-      }
-      function all_button(signal) {
-	$("." + signal + "_number").css("background-color", "#606c88").css("color", "White");
-	if(signal == "s") {
-	  s_tunnel.splice(0, s_tunnel.length);
-	  for(var i = 1; i <= CHR_NUMBER; i++) {
-	    s_tunnel.push(i);
-	  }
-	}
-	else {
-	  t_tunnel.splice(0, s_tunnel.length);
-	  for(var i = 1; i <= CHR_NUMBER; i++) {
-	    t_tunnel.push(i);
-	  }
-	}
-	for(var i = 0; i < s_tunnel.length; i++) {
-	  for(var j = 0; j < t_tunnel.length; j++) {
-	    sketch_line(s_tunnel[i], t_tunnel[j]);
-	  }
-	}
-      }
-      function tunnel_add(signal) {
-	var line = signal.split("_");
-	if(line[0] == "s") {
-	  s_tunnel.push(parseInt(line[1]));
-	  for(var i = 0; i < t_tunnel.length; i++) {
-	    sketch_line(line[1], t_tunnel[i]);
-	  }
-	}
-	else if(line[0] == "t") {
-	  t_tunnel.push(parseInt(line[1]));
-	  for(var i = 0; i < s_tunnel.length; i++) {
-	    sketch_line(s_tunnel[i], line[1]);
-	  }
-	}
-	else {
-	  console.log("Error: function tunnel_push");
-	}
-      }
-      function tunnel_delete(signel) {
-	var line = signel.split("_");
-	var delete_index;
-	if(line[0] == "s") {
-	  for(var i = 0; i < s_tunnel.length; i++) {
-	    if(s_tunnel[i] == line[1]) {
-	      delete_index = i;
-	      break;
-	    }
-	  }
-	  for(var i = 0; i < t_tunnel.length; i++) {
-	    group.select("#chr" + line[1] + "-" + t_tunnel[i] + "_line_set").remove();
-	  }
-	  s_tunnel.splice(delete_index, 1);
-	}
-	else if(line[0] == "t") {
-	  for(var i = 0; i < t_tunnel.length; i++) {
-	    if(t_tunnel[i] == line[1]) {
-	      delete_index = i;
-	      break;
-	    }
-	  }
-	  for(var i = 0; i < s_tunnel.length; i++) {
-	    group.select("#chr" + s_tunnel[i] + "-" + line[1] + "_line_set").remove();
-	  }
-	  t_tunnel.splice(delete_index, 1);
-	}
-	else {
-	  console.log("Error: function tunnel_delete");
-	}
-      }
-      function m_to_m_reset() {
-	$(".s_number").css("background-color", "#FFF").css("color", "#666");
-	$(".t_number").css("background-color", "#FFF").css("color", "#666");
-	for(var i = 0; i < s_tunnel.length; i++) {
-	  for(var j = 0; j < t_tunnel.length; j++) {
-	    group.select("#chr" + s_tunnel[i] + "-" + t_tunnel[j] + "_line_set").remove();
-	  }
-	}
-	s_tunnel.splice(0, s_tunnel.length);
-	t_tunnel.splice(0, t_tunnel.length);
-      }
-      function s_to_s_link() {
-	var text = $("input[type=text]").val().replace(/\s+/g, '');
-	var line = text.split(",");
-	line.forEach(function(element) {
-	  var sep = element.split("-");
-	  var source = parseInt(sep[0]);
-	  var target = parseInt(sep[1]);
-	  if( source > 0 && source <= CHR_NUMBER && target > 0 && target <= CHR_NUMBER) {
-	    sketch_line(source, target);
-	  }
-	  else {
-	    alert("Error: Wrong formatting input.");
-	  }
-	});
-      }
-      function s_to_s_reset() {
-	alert('woienf');
-	document.input.value = "";
-      }
-
 
       //Adjustable circle layout which base on the size of user's screen
       var outer_radius = 960 * 0.5 * 0.5,
@@ -185,26 +73,15 @@
 	chr_start_angle_set.push(chr_start_angle);
 	chr_set = circle_radius.startAngle(chr_start_angle).endAngle(chr_end_angle);
 
-	chr_region = group.append("g").attr("id", "chr_" + (i + 1) + "_region").attr("onmouseover", "show_chr_id_mouseover(" + (i + 1) + ")").attr("onmouseout",  "show_chr_id_mouseout(" + (i + 1) + ")");
+	chr_region = group.append("g").attr("id", "chr_" + (i + 1) + "_region")
+	.attr("onmouseover", "show_chr_id_mouseover(" + (i + 1) + ")")
+	.attr("onmouseout",  "show_chr_id_mouseout(" + (i + 1) + ")");
 
 	chr_region.append("path").attr("id", "chr_" + (i + 1) + "_set")
 	.attr("d", chr_set)
 	.attr("fill", "none")
 	.attr("stroke", "#000")
 	.attr("stroke-width", "2");
-      }
-      function show_chr_id_mouseover(num) {
-	canvas.append("svg:circle").attr("id", "hidde_circle").attr("r", inner_radius * 0.99).attr("fill", "#000").style("opacity", "0.9").attr("cx", circle_horizontal_shift).attr("cy", circle_vertical_shift);
-	if(num < 10) {
-	  canvas.append("svg:text").attr("id", "chr_id").text(num).attr("fill", "White").style("font-size", "240px").attr("x", (circle_horizontal_shift - 60)).attr("y", (circle_vertical_shift + 90));
-	}
-	else {
-	  canvas.append("svg:text").attr("id", "chr_id").text(num).attr("fill", "White").style("font-size", "240px").attr("x", (circle_horizontal_shift - 135)).attr("y", (circle_vertical_shift + 90));
-	}
-      }
-      function show_chr_id_mouseout(num) {
-        canvas.select("#hidde_circle").remove();
-        canvas.select("#chr_id").remove();
       }
 
       //Draw every genes on their coresponding chromosome region
@@ -253,16 +130,112 @@
       }
 
       //interaction with client
-      function show_line(num) {
-	for(var i = 1; i <= CHR_NUMBER; i++) {
-	  if(i == num){
-	    $("#chr" + i + "_line_set").css("display", "block");
-	  }
-	  else {
-	    $("#chr" + i + "_line_set").css("display", "none");
+      var s_tunnel = [], t_tunnel = [];
+      function change_button_color(node_name, back_color, font_color) {
+	$(node_name).css("background-color", back_color).css("color", font_color);
+      }
+      function number_button(signal) {
+	if($("#"+signal).css("background-color") == "rgb(255, 255, 255)") {
+	  change_button_color("#"+signal, "#606c88", "White");
+	  tunnel_add(signal);
+	}
+	else {
+	  change_button_color("#"+signal, "#FFF", "#666");
+	  tunnel_delete(signal);
+	}
+      }
+      function all_button(signal) {
+	change_button_color("." + signal + "_number", "#606c88", "White");
+	if(signal == "s") {
+	  s_tunnel.splice(0, s_tunnel.length);
+	  for(var i = 1; i <= CHR_NUMBER; i++) { s_tunnel.push(i); }
+	}
+	else {
+	  t_tunnel.splice(0, s_tunnel.length);
+	  for(var i = 1; i <= CHR_NUMBER; i++) { t_tunnel.push(i); }
+	}
+	for(var i = 0; i < s_tunnel.length; i++) {
+	  for(var j = 0; j < t_tunnel.length; j++) {
+	    sketch_line(s_tunnel[i], t_tunnel[j]);
 	  }
 	}
       }
+      function tunnel_add(signal) {
+	var line = signal.split("_");
+	if(line[0] == "s") {
+	  s_tunnel.push(parseInt(line[1]));
+	  for(var i = 0; i < t_tunnel.length; i++) { sketch_line(line[1], t_tunnel[i]); }
+	}
+	else if(line[0] == "t") {
+	  t_tunnel.push(parseInt(line[1]));
+	  for(var i = 0; i < s_tunnel.length; i++) { sketch_line(s_tunnel[i], line[1]); }
+	}
+	else {
+	  console.log("Error: function tunnel_push");
+	}
+      }
+      function tunnel_delete(signel) {
+	var line = signel.split("_");
+	var i = 0;
+	if(line[0] == "s") {
+	  t_tunnel.forEach(function(e) { group.select("#chr" + line[1] + "-" + e + "_line_set").remove(); });
+	  while(s_tunnel[i] != line[1]) { i++ }
+	  s_tunnel.splice(i, 1);
+	}
+	else if(line[0] == "t") {
+	  s_tunnel.forEach(function(e) { group.select("#chr" + e + "-" + line[1] + "_line_set").remove(); });
+	  while(t_tunnel[i] == line[1]) { i++; }
+	  t_tunnel.splice(i, 1);
+	}
+	else {
+	  console.log("Error: function tunnel_delete");
+	}
+      }
+      function m_to_m_reset() {
+	change_button_color(".s_number", "#FFF", "#666");
+	change_button_color(".t_number", "#FFF", "#666");
+	for(var i = 0; i < s_tunnel.length; i++) {
+	  for(var j = 0; j < t_tunnel.length; j++) {
+	    group.select("#chr" + s_tunnel[i] + "-" + t_tunnel[j] + "_line_set").remove();
+	  }
+	}
+	s_tunnel.splice(0, s_tunnel.length);
+	t_tunnel.splice(0, t_tunnel.length);
+      }
+      function s_to_s_link() {
+	var text = $("input[type=text]").val().replace(/\s+/g, '');
+	var line = text.split(",");
+	line.forEach(function(element) {
+	  var sep = element.split("-");
+	  var source = parseInt(sep[0]);
+	  var target = parseInt(sep[1]);
+	  if( source > 0 && source <= CHR_NUMBER && target > 0 && target <= CHR_NUMBER) {
+	    sketch_line(source, target);
+	  }
+	  else {
+	    alert("Error: Wrong formatting input.");
+	  }
+	});
+      }
+      function s_to_s_reset() {
+	alert('s_to_s reset');
+      }
+
+      //hover to show chr id
+      function show_chr_id_mouseover(num) {
+	canvas.append("svg:circle").attr("id", "hidde_circle").attr("r", inner_radius * 0.99).attr("fill", "#000").style("opacity", "0.9").attr("cx", circle_horizontal_shift).attr("cy", circle_vertical_shift);
+	if(num < 10) {
+	  canvas.append("svg:text").attr("id", "chr_id").text(num).attr("fill", "White").style("font-size", "240px").attr("x", (circle_horizontal_shift - 60)).attr("y", (circle_vertical_shift + 90));
+	}
+	else {
+	  canvas.append("svg:text").attr("id", "chr_id").text(num).attr("fill", "White").style("font-size", "240px").attr("x", (circle_horizontal_shift - 135)).attr("y", (circle_vertical_shift + 90));
+	}
+      }
+      function show_chr_id_mouseout(num) {
+        canvas.select("#hidde_circle").remove();
+        canvas.select("#chr_id").remove();
+      }
+
 
     </script>
   </body>

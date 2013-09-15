@@ -11,67 +11,36 @@ body {
   width: 640px; 
   float:left; 
 }
-#m_to_m_tablet { 
-  width: 320px; 
-  float:right; 
-  margin: 0px 0px 0px 0px; 
-}
-#m_to_m_tablet p { 
-  font-size: 24px; 
-  border-bottom:2px solid #888; 
-  margin-bottom: 0px; 
-  padding-bottom: 5px; 
-}
-#m_to_m_tablet center p { 
-  font-size:16px; 
-  margin-bottom: 0px; 
-  border: 0px; 
-}
-#m_to_m_tablet button { 
-  border-radius: 5px; 
-  color: #666; 
-  background-color: #FFF; 
+button.functional_button { 
+  width: 60px;
+  height: 30px; 
   font-size: 16px;
-}
-.s_number, .t_number { 
-  width: 35px; 
-  height: 35px; 
-}
-.control_all { 
-  width: 105px; 
-  height: 30px;
-}
-#s_a {
-  margin-left: 5px;
-}
-#t_a {
-  margin-right: 5px;
-}
-#source_block { 
-  float:left; 
-  margin-left: 5px;
-}
-#target_block { 
+  border-radius: 5px; 
+  background-color: #FFF; 
+  color: #666; 
+  cursor: pointer; 
   float:right; 
-  margin-right: 5px;
 }
+button.functional_button:hover { 
+  background-color: #606c88; 
+  color: White; 
+}
+.block_title {
+  font-size: 24px; 
+  margin-bottom: -2px;
+}
+
+/* Single to single block */
 #s_to_s_tablet { 
   width: 320px; 
   float: right; 
   margin-top: 10px; 
 }
-#s_to_s_tablet p { 
-  font-size: 24px; 
-  border-bottom:2px solid #888; 
-  margin-bottom: 0px; 
-  padding-bottom: 5px; 
-}
 #s_to_s_tablet input { 
-  width: 307px;
+  width: 235px;
   height:24px;
   font-size:14px; 
-  margin-top: 10px; 
-  padding: 2px 5px; 
+  padding: 2px 8px; 
   border-radius: 3px; 
   box-shadow: 2px 2px 2px #999; 
   border: 1px solid #666; 
@@ -81,34 +50,45 @@ body {
   display:block; 
   margin: 7px 0px 0px 5px; 
 }
-#s_to_s_submit_linking { 
-  width: 60px;
-  height: 30px; 
-  font-size: 16px;
-  border-radius: 5px; 
-  background-color: #FFF; 
-  color: #666; 
-  margin-top: -10px; 
-  cursor: pointer; 
+
+/* Multiple to multiple block */
+#m_to_m_tablet { 
+  width: 320px; 
   float:right; 
+  margin-top: 20px; 
 }
-#s_to_s_submit_linking:hover { 
+#m_to_m_tablet center p { 
+  font-size:16px; 
+  margin-bottom: 0px; 
+  border: 0px; 
+}
+.s_number, .t_number { 
+  width: 35px; 
+  height: 35px; 
+  border-radius: 5px; 
+  color: #666; 
+  background-color: #FFF; 
+  font-size: 16px;
+}
+.all_button { 
+  width: 140px; 
+  height: 30px;
+  margin-top: 5px;
+  border-radius: 5px; 
+  color: #666; 
+  background-color: #FFF; 
+  font-size: 16px;
+  cursor: pointer;
+}
+.all_button:hover { 
   background-color: #606c88; 
   color: White; 
 }
-#m_to_m_reset {
-  width: 100px;
-  height: 30px; 
+#source_block { 
+  float:left; 
+  margin-left: 5px;
 }
-#s_to_s_reset {
-  width: 60px;
-  height: 30px; 
-  font-size: 16px;
-  border-radius: 5px; 
-  background-color: #FFF; 
-  color: #666; 
-  margin-top: -10px; 
-  cursor: pointer; 
+#target_block { 
   float:right; 
+  margin-right: 5px;
 }
-
