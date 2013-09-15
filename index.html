@@ -5,20 +5,161 @@
     <title>PPI</title>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <style>
-      body { overflow: scroll; }
-    </style>
+    <link href="style.css" rel="stylesheet"></link>
   </head>
   <body>
+    <div id="page">
+      <div id="circle"></div>
+      <div id="s_to_s_tablet">
+	<p>Single-to-Single Link</p>
+	<input type="text" name="s_to_s_string" placeholder="Typing the pair..." /><br />
+	<span>ex: 1-2, 4-3, ...</span>
+	<button id="s_to_s_submit_linking" onclick="s_to_s_link()">Link</button>
+      </div>
+      <div id="m_to_m_tablet">
+	<p>Multiple-to-Multiple Link</p>
+	<div id="source_block">
+	  <center><p>Source</p></center>
+	  <button id="s_1" class="s_number" onclick="number_button('s_1')">1</button><button id="s_2" class="s_number" onclick="number_button('s_2')">2</button><button id="s_3" class="s_number" onclick="number_button('s_3')">3</button><button id="s_4" class="s_number" onclick="number_button('s_4')">4</button><br />
+	  <button id="s_5" class="s_number" onclick="number_button('s_5')">5</button><button id="s_6" class="s_number" onclick="number_button('s_6')">6</button><button id="s_7" class="s_number" onclick="number_button('s_7')">7</button><button id="s_8" class="s_number" onclick="number_button('s_8')">8</button><br />
+	  <button id="s_9" class="s_number" onclick="number_button('s_9')">9</button><button id="s_10" class="s_number" onclick="number_button('s_10')">10</button><button id="s_11" class="s_number" onclick="number_button('s_11')">11</button><button id="s_12" class="s_number" onclick="number_button('s_12')">12</button><br />
+	  <button id="s_13" class="s_number" onclick="number_button('s_13')">13</button><button id="s_14" class="s_number" onclick="number_button('s_14')">14</button><button id="s_15" class="s_number" onclick="number_button('s_15')">15</button><button id="s_16" class="s_number" onclick="number_button('s_16')">16</button><br />
+	  <button id="s_a" class="control_all" onclick="all_button('s')">All</button><button id="s_c" class="control_all" onclick="clean_button('s')">Clean</button>
+	</div>
+	<div id="target_block">
+	  <center><p>Target</p></center>
+	  <button id="t_1" class="t_number" onclick="number_button('t_1')">1</button><button id="t_2" class="t_number" onclick="number_button('t_2')">2</button><button id="t_3" class="t_number" onclick="number_button('t_3')">3</button><button id="t_4" class="t_number" onclick="number_button('t_4')">4</button><br />
+	  <button id="t_5" class="t_number" onclick="number_button('t_5')">5</button><button id="t_6" class="t_number" onclick="number_button('t_6')">6</button><button id="t_7" class="t_number" onclick="number_button('t_7')">7</button><button id="t_8" class="t_number" onclick="number_button('t_8')">8</button><br />
+	  <button id="t_9" class="t_number" onclick="number_button('t_9')">9</button><button id="t_10" class="t_number" onclick="number_button('t_10')">10</button><button id="t_11" class="t_number" onclick="number_button('t_11')">11</button><button id="t_12" class="t_number" onclick="number_button('t_12')">12</button><br />
+	  <button id="t_13" class="t_number" onclick="number_button('t_13')">13</button><button id="t_14" class="t_number" onclick="number_button('t_14')">14</button><button id="t_15" class="t_number" onclick="number_button('t_15')">15</button><button id="t_16" class="t_number" onclick="number_button('t_16')">16</button><br />
+	  <button id="t_a" class="control_all" onclick="all_button('t')">All</button><button id="t_c" class="control_all" onclick="clean_button('t')">Clean</button>
+	</div>
+	<button id="reset" onclick="reset()">Reset</button>
+      </div>
+    </div>
+
     <script>
+      var s_tunnel = [],
+      t_tunnel = [];
+      function number_button(signal) {
+	if($("#"+signal).css("background-color") == "rgb(255, 255, 255)") {
+	  $("#"+signal).css("background-color", "#606c88").css("color", "White");
+	  tunnel_add(signal);
+	}
+	else {
+	  $("#"+signal).css("background-color", "#FFF").css("color", "#666");
+	  tunnel_delete(signal);
+	}
+      }
+      function all_button(signal) {
+	$("." + signal + "_number").css("background-color", "#606c88").css("color", "White");
+	if(signal == "s") {
+	  s_tunnel.splice(0, s_tunnel.length);
+	  for(var i = 1; i <= CHR_NUMBER; i++) {
+	    s_tunnel.push(i);
+	  }
+	}
+	else {
+	  t_tunnel.splice(0, s_tunnel.length);
+	  for(var i = 1; i <= CHR_NUMBER; i++) {
+	    t_tunnel.push(i);
+	  }
+	}
+	for(var i = 0; i < s_tunnel.length; i++) {
+	  for(var j = 0; j < t_tunnel.length; j++) {
+	    sketch_line(s_tunnel[i], t_tunnel[j]);
+	  }
+	}
+      }
+      function clean_button(signal) {
+	$("." + signal + "_number").css("background-color", "#FFF").css("color", "#666");
+	for(var i = 0; i < s_tunnel.length; i++) {
+	  for(var j = 0; j < t_tunnel.length; j++) {
+	    group.select("#chr" + s_tunnel[i] + "-" + t_tunnel[j] + "_line_set").remove();
+	  }
+	}
+	if(signal == "s") {
+	  s_tunnel.splice(0, s_tunnel.length);
+	}
+	else {
+	  t_tunnel.splice(0, t_tunnel.length);
+	}
+      }
+      function tunnel_add(signal) {
+	var line = signal.split("_");
+	if(line[0] == "s") {
+	  s_tunnel.push(parseInt(line[1]));
+	  for(var i = 0; i < t_tunnel.length; i++) {
+	    sketch_line(line[1], t_tunnel[i]);
+	  }
+	}
+	else if(line[0] == "t") {
+	  t_tunnel.push(parseInt(line[1]));
+	  for(var i = 0; i < s_tunnel.length; i++) {
+	    sketch_line(s_tunnel[i], line[1]);
+	  }
+	}
+	else {
+	  console.log("Error: function tunnel_push");
+	}
+      }
+      function tunnel_delete(signel) {
+	var line = signel.split("_");
+	var delete_index;
+	if(line[0] == "s") {
+	  for(var i = 0; i < s_tunnel.length; i++) {
+	    if(s_tunnel[i] == line[1]) {
+	      delete_index = i;
+	      break;
+	    }
+	  }
+	  for(var i = 0; i < t_tunnel.length; i++) {
+	    group.select("#chr" + line[1] + "-" + t_tunnel[i] + "_line_set").remove();
+	  }
+	  s_tunnel.splice(delete_index, 1);
+	}
+	else if(line[0] == "t") {
+	  for(var i = 0; i < t_tunnel.length; i++) {
+	    if(t_tunnel[i] == line[1]) {
+	      delete_index = i;
+	      break;
+	    }
+	  }
+	  for(var i = 0; i < s_tunnel.length; i++) {
+	    group.select("#chr" + s_tunnel[i] + "-" + line[1] + "_line_set").remove();
+	  }
+	  t_tunnel.splice(delete_index, 1);
+	}
+	else {
+	  console.log("Error: function tunnel_delete");
+	}
+      }
+      function reset() {
+	clean_button("s");
+	clean_button("t");
+      }
+      function s_to_s_link() {
+	var text = $("input[type=text]").val().replace(/\s+/g, '');
+	var line = text.split(",");
+	line.forEach(function(element) {
+	  var sep = element.split("-");
+	  var source = parseInt(sep[0]);
+	  var target = parseInt(sep[1]);
+	  if( source > 0 && source <= CHR_NUMBER && target > 0 && target <= CHR_NUMBER) {
+	    sketch_line(source, target);
+	  }
+	  else {
+	    alert("Error: Wrong formatting input.");
+	  }
+	});
+      }
+
 
       //Adjustable circle layout which base on the size of user's screen
-      var client_view_width = window.innerWidth,
-      client_view_height = window.innerHeight,
-      outer_radius = client_view_height * 0.8 * 0.5,
+      var outer_radius = 960 * 0.5 * 0.5,
       inner_radius = outer_radius * 0.8,
-      circle_horizontal_shift = client_view_width /2,
-      circle_vertical_shift = client_view_height / 2,
+      circle_horizontal_shift = 320,
+      circle_vertical_shift = outer_radius * 1.3,
       circle_radius = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius);
 
       //Amounts of the chromosomes
@@ -32,8 +173,10 @@
       var length_sum = d3.sum(length);
 
       //The foundation of the circle layout
-      var canvas = d3.select("body").append("svg"),
+      var canvas = d3.select("#circle").append("svg"),
       group = canvas.append("g").attr("transform","translate(" + circle_horizontal_shift + ", " + circle_vertical_shift +")");
+      //group.append("svg:circle").attr("r", inner_radius * 0.99).attr("fill", "#DDD");
+      //group.append("svg:text").text("L o a d i n g ...").attr("x", "-55");
 
       //Distrubute the region for each chromosome 
       var chr_region, chr_set, chr_start_angle, chr_end_angle,
@@ -50,7 +193,6 @@
 	chr_set = circle_radius.startAngle(chr_start_angle).endAngle(chr_end_angle);
 
 	chr_region = group.append("g").attr("id", "chr_" + (i + 1) + "_region")
-	.style("cursor", "pointer")
 	.attr("onclick","show_line(" + (i + 1) +")")
 	.attr("title", "chr " + (i + 1));
 
@@ -80,21 +222,17 @@
 
 	});
       }
-
       //Draw the line of the relationship
-      for(var i = 1; i <= CHR_NUMBER; i++) { 
-	sketch_line(i);
-      }
-      function sketch_line(i) {
-	d3.json("./data/link/chr" + i +"_gene_link.json", function(data) {
+      function sketch_line(source, target) {
+	d3.json("./data/link/chr" + source + "-" + target + "_gene_link.json", function(data) {
 
 	  var line = d3.svg.line.radial().interpolate("basis")
 	  .radius(function(d, i) { if(i == 1 || i == 2) { return inner_radius * 0.6; } else { return inner_radius; } })
 	  .angle(function(d) { return d; });
 
-	  group.select("#chr_"+ i + "_region").append("g").attr("id", "chr" + i + "_line_set")
-	  .attr("display", function() { if(i == 1) { return "block"} else { return "none" } })
-	  .selectAll("path").data(data).enter().append("path").attr("class", "chr" + i + "_line")
+	  group.select("#chr_"+ source + "_region")
+	  .selectAll("#chr" + source + "-" + target + "_line_set").data([1]).enter().append("g").attr("id", "chr" + source + "-" + target + "_line_set")
+	  .selectAll(".chr" + source + "-" + target + "_line").data(data).enter().append("path").attr("class", "chr" + source + "-" + target + "_line")
 	  .attr("d", function(d){
 	    var start = convert_to_angle(d.s_chr_num, (d.s_start + d.s_end) * 0.5 );
 	    var end = convert_to_angle(d.t_chr_num, (d.t_start + d.t_end ) * 0.5 );
@@ -105,7 +243,6 @@
 	  .attr("stroke", function(d) { return chr_color[d.t_chr_num - 1]; } )
 	  .attr("fill", "none");
 	});
-
       }
       function convert_to_angle(num, position) {
 	return chr_start_angle_set[num - 1] + (( position / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER));
@@ -122,42 +259,6 @@
 	  }
 	}
       }
-
-      /*
-      data = [
-      {"s_chr_num":1, "s_gene":"YAL001C", "s_start":151168, "s_end":147596, "t_chr_num":2, "t_gene":"YBR009C", "t_start":255682, "t_end":255371},
-      {"s_chr_num":1, "s_gene":"YAR042W", "s_start":192613, "s_end":196179, "t_chr_num":4, "t_gene":"YDR062W", "t_start":576471, "t_end":578156},
-      {"s_chr_num":1, "s_gene":"YAL012W", "s_start":130802, "s_end":131986, "t_chr_num":7, "t_gene":"YGL122C", "t_start":280529, "t_end":278952},
-      {"s_chr_num":1, "s_gene":"YAR042W", "s_start":192613, "s_end":196179, "t_chr_num":13, "t_gene":"YMR202W", "t_start":667536, "t_end":668204}
-      ];
-
-      group.select("#chr_1_region").selectAll(".wonder").data(data).enter().append("svg:line")
-      .attr("x1",function(d) { return x_locate(d.s_chr_num, d.s_start, d.s_end); })
-      .attr("y1",function(d) { return y_locate(d.s_chr_num, d.s_start, d.s_end); })
-      .attr("x2",function(d) { return x_locate(d.t_chr_num, d.t_start, d.t_end); })
-      .attr("y2",function(d) { return y_locate(d.t_chr_num, d.t_start, d.t_end); }).attr("stroke", "#000");
-
-
-      function x_locate(num, start, end) {
-	console.log("\nthis is x, " + num + ", " + start + ", " + end);
-	var middle = (start + end) / 2;
-	console.log("middle:" + middle);
-	var angle = chr_start_angle_set[num - 1] + ((middle / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER));
-	console.log("angle:" + angle);
-	console.log("cos: " + Math.cos(angle));
-	return Math.cos(angle) * inner_radius;
-      }
-      function y_locate(num, start, end) {
-	console.log("\nthis is x, " + num + ", " + start + ", " + end);
-	var middle = (start + end) / 2;
-	console.log("middle:" + middle);
-	var angle = chr_start_angle_set[num - 1] + ((middle / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER));
-	console.log("angle:" + angle);
-	console.log("cos: " + Math.sin(angle));
-	return Math.sin(angle) * inner_radius;
-      }
-
-      */
 
     </script>
   </body>

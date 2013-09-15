@@ -95,39 +95,63 @@ for($i = 1; $i <= $CHR_NUMBER; $i++) {
 my @info;
 my @link;
 my $k;
+my $source;
+my $target;
 
 print "\n\tWriring files...\n";
 for($k = 0; $k < $CHR_NUMBER; $k++) {
-  open WRITE_FILE, "> ./link/chr".($k + 1)."_gene_link.json";
-  print WRITE_FILE "[\n";
+  $source = $k + 1;
+  $target = 1;
   for($i = $link_list_range[$k]; $i < $link_list_range[$k + 1]; $i++){
     @link = split("\t", $link_list[$i]);
-    if($link[0] != $link[2]){
-      if($i == $link_list_range[$k]) {
-	print WRITE_FILE "{";
+
+    if($link[2] == $target) {
+      if(-e "./link/chr".$source."-".$target."_gene_link.json") {
+        open WRITE_FILE, ">> ./link/chr".$source."-".$target."_gene_link.json";
+        print WRITE_FILE ",\n{";
       }
-      else{
-	print WRITE_FILE ",\n{";
+      else {
+        open WRITE_FILE, ">> ./link/chr".$source."-".$target."_gene_link.json";
+        print WRITE_FILE "[\n{";
       }
-      for($j = $info_list_range[$link[0] - 1]; $j < $info_list_range[$link[0]]; $j++) { 
-	@info = split("\t", $info_list[$j]);
-	if($link[0] eq $info[0] && $link[1] eq $info[1]){
-	  print WRITE_FILE "\"s_chr_num\":".$link[0].", \"s_gene\":\"".$link[1]."\", \"s_start\":".$info[2].", \"s_end\":".$info[3];
-	}
+    }
+    else{
+      close WRITE_FILE;
+      $target = $link[2];
+      if(-e "./link/chr".$source."-".$target."_gene_link.json") {
+        open WRITE_FILE, ">> ./link/chr".$source."-".$target."_gene_link.json";
+        print WRITE_FILE ",\n{";
       }
-      for($j = $info_list_range[$link[2] - 1]; $j < $info_list_range[$link[2]]; $j++) { 
-	@info = split("\t", $info_list[$j]);
-	if($link[2] eq $info[0] && $link[3] eq $info[1]){
-	  print WRITE_FILE ", \"t_chr_num\":".$link[2].", \"t_gene\":\"".$link[3]."\", \"t_start\":".$info[2].", \"t_end\":".$info[3]."}";
-	}
+      else {
+        open WRITE_FILE, ">> ./link/chr".$source."-".$target."_gene_link.json";
+        print WRITE_FILE "[\n{";
+      }
+    }
+    
+    for($j = $info_list_range[$link[0] - 1]; $j < $info_list_range[$link[0]]; $j++) { 
+      @info = split("\t", $info_list[$j]);
+      if($link[0] eq $info[0] && $link[1] eq $info[1]){
+	print WRITE_FILE "\"s_chr_num\":".$link[0].", \"s_gene\":\"".$link[1]."\", \"s_start\":".$info[2].", \"s_end\":".$info[3];
+      }
+    }
+    for($j = $info_list_range[$link[2] - 1]; $j < $info_list_range[$link[2]]; $j++) { 
+      @info = split("\t", $info_list[$j]);
+      if($link[2] eq $info[0] && $link[3] eq $info[1]){
+	print WRITE_FILE ", \"t_chr_num\":".$link[2].", \"t_gene\":\"".$link[3]."\", \"t_start\":".$info[2].", \"t_end\":".$info[3]."}";
       }
     }
   }
-  print WRITE_FILE "\n]";
   close WRITE_FILE;
-  print "\n\t\tchr".($k + 1)."_gene_link.json is created.";
+  print "\n\t\tchr ".($k + 1)." source to chr 16 target is created.";
 }
 
+for($i = 1; $i <= $CHR_NUMBER; $i++) {
+  for($j = 1; $j <= $CHR_NUMBER; $j++) {
+    open WRITE_FILE, ">> ./link/chr".$i."-".$j."_gene_link.json";
+    print WRITE_FILE"\n]";
+    close WRITE_FILE;
+  }
+}
 print "\n\n";
 
 

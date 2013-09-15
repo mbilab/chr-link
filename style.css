@@ -1,0 +1,104 @@
+body { 
+  background-color: #DDD; 
+  font-family: Helvetica; 
+  color: #666; 
+}
+#page { 
+  width: 960px; 
+  margin: 0 auto;
+}
+#circle { 
+  width: 640px; 
+  float:left; 
+}
+#m_to_m_tablet { 
+  width: 320px; 
+  float:right; 
+  margin: 20px 0px 0px 0px; 
+}
+#m_to_m_tablet p { 
+  font-size: 18px; 
+  border-bottom:2px solid #888; 
+  margin-bottom: 0px; 
+  padding-bottom: 5px; 
+}
+#m_to_m_tablet center p { 
+  font-size:14px; 
+  margin-bottom: 0px; 
+  border: 0px; 
+}
+#m_to_m_tablet button { 
+  border-radius: 5px; 
+  color: #666; 
+  background-color: #FFF; 
+}
+.s_number, .t_number { 
+  width: 30px; 
+  height: 30px; 
+}
+.control_all { 
+  width: 60px; 
+}
+#source_block { 
+  float:left; 
+  margin-left: 20px;
+}
+#target_block { 
+  float:right; 
+  margin-right: 20px;
+}
+#m_to_m_submit_linking { 
+  width: 80px;
+  height: 24px;
+  margin-top: 10px; 
+  float: right; 
+  cursor: pointer; 
+}
+#m_to_m_submit_linking:hover { 
+  background-color: #606c88; 
+  color: White; 
+}
+
+#s_to_s_tablet { 
+  width: 320px; 
+  float: right; 
+  margin-top: 50px; 
+}
+#s_to_s_tablet p { 
+  font-size: 18px; 
+  border-bottom:2px solid #888; 
+  margin-bottom: 0px; 
+  padding-bottom: 5px; 
+}
+#s_to_s_tablet input { 
+  width: 307px;
+  height:16px;
+  font-size:10px; 
+  margin-top: 10px; 
+  padding: 2px 5px; 
+  border-radius: 3px; 
+  box-shadow: 2px 2px 2px #999; 
+  border: 1px solid #666; 
+}
+#s_to_s_tablet span { 
+  font-size:10px; 
+  display:block; 
+  margin: 3px 0px 0px 5px; 
+}
+#s_to_s_submit_linking { 
+  width: 80px; 
+  height: 24px; 
+  border-radius: 5px; 
+  background-color: #FFF; 
+  color: #666; 
+  margin-top: 0px; 
+  cursor: pointer; 
+  float:right; 
+}
+#s_to_s_submit_linking:hover { 
+  background-color: #606c88; 
+  color: White; 
+}
+#reset {
+  margin-top:80px;
+}
