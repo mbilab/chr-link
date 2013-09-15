@@ -14,7 +14,7 @@
 	<p>Single-to-Single Link</p>
 	<input type="text" name="s_to_s_string" placeholder="Typing the pair..." /><br />
 	<span>ex: 1-2, 4-3, ...</span>
-	<button id="s_to_s_submit_linking" onclick="s_to_s_link()">Link</button>
+	<button id="s_to_s_submit_linking" onclick="s_to_s_link()">Link</button><button id="s_to_s_reset" onclick="s_to_s_reset()">Reset</button>
       </div>
       <div id="m_to_m_tablet">
 	<p>Multiple-to-Multiple Link</p>
@@ -24,7 +24,6 @@
 	  <button id="s_5" class="s_number" onclick="number_button('s_5')">5</button><button id="s_6" class="s_number" onclick="number_button('s_6')">6</button><button id="s_7" class="s_number" onclick="number_button('s_7')">7</button><button id="s_8" class="s_number" onclick="number_button('s_8')">8</button><br />
 	  <button id="s_9" class="s_number" onclick="number_button('s_9')">9</button><button id="s_10" class="s_number" onclick="number_button('s_10')">10</button><button id="s_11" class="s_number" onclick="number_button('s_11')">11</button><button id="s_12" class="s_number" onclick="number_button('s_12')">12</button><br />
 	  <button id="s_13" class="s_number" onclick="number_button('s_13')">13</button><button id="s_14" class="s_number" onclick="number_button('s_14')">14</button><button id="s_15" class="s_number" onclick="number_button('s_15')">15</button><button id="s_16" class="s_number" onclick="number_button('s_16')">16</button><br />
-	  <button id="s_a" class="control_all" onclick="all_button('s')">All</button>
 	</div>
 	<div id="target_block">
 	  <center><p>Target</p></center>
@@ -32,9 +31,8 @@
 	  <button id="t_5" class="t_number" onclick="number_button('t_5')">5</button><button id="t_6" class="t_number" onclick="number_button('t_6')">6</button><button id="t_7" class="t_number" onclick="number_button('t_7')">7</button><button id="t_8" class="t_number" onclick="number_button('t_8')">8</button><br />
 	  <button id="t_9" class="t_number" onclick="number_button('t_9')">9</button><button id="t_10" class="t_number" onclick="number_button('t_10')">10</button><button id="t_11" class="t_number" onclick="number_button('t_11')">11</button><button id="t_12" class="t_number" onclick="number_button('t_12')">12</button><br />
 	  <button id="t_13" class="t_number" onclick="number_button('t_13')">13</button><button id="t_14" class="t_number" onclick="number_button('t_14')">14</button><button id="t_15" class="t_number" onclick="number_button('t_15')">15</button><button id="t_16" class="t_number" onclick="number_button('t_16')">16</button><br />
-	  <button id="t_a" class="control_all" onclick="all_button('t')">All</button>
 	</div>
-	<button id="reset" onclick="reset()">Reset</button>
+	  <button id="s_a" class="control_all" onclick="all_button('s')">All</button><button id="m_to_m_reset" onclick="m_to_m_reset()">Reset</button><button id="t_a" class="control_all" onclick="all_button('t')">All</button>
       </div>
     </div>
 
@@ -120,7 +118,7 @@
 	  console.log("Error: function tunnel_delete");
 	}
       }
-      function reset() {
+      function m_to_m_reset() {
 	$(".s_number").css("background-color", "#FFF").css("color", "#666");
 	$(".t_number").css("background-color", "#FFF").css("color", "#666");
 	for(var i = 0; i < s_tunnel.length; i++) {
@@ -146,6 +144,10 @@
 	  }
 	});
       }
+      function s_to_s_reset() {
+	alert('woienf');
+	document.input.value = "";
+      }
 
 
       //Adjustable circle layout which base on the size of user's screen
@@ -168,8 +170,6 @@
       //The foundation of the circle layout
       var canvas = d3.select("#circle").append("svg"),
       group = canvas.append("g").attr("transform","translate(" + circle_horizontal_shift + ", " + circle_vertical_shift +")");
-      //group.append("svg:circle").attr("r", inner_radius * 0.99).attr("fill", "#DDD");
-      //group.append("svg:text").text("L o a d i n g ...").attr("x", "-55");
 
       //Distrubute the region for each chromosome 
       var chr_region, chr_set, chr_start_angle, chr_end_angle,
@@ -185,15 +185,26 @@
 	chr_start_angle_set.push(chr_start_angle);
 	chr_set = circle_radius.startAngle(chr_start_angle).endAngle(chr_end_angle);
 
-	chr_region = group.append("g").attr("id", "chr_" + (i + 1) + "_region")
-	.attr("onclick","show_line(" + (i + 1) +")")
-	.attr("title", "chr " + (i + 1));
+	chr_region = group.append("g").attr("id", "chr_" + (i + 1) + "_region").attr("onmouseover", "show_chr_id_mouseover(" + (i + 1) + ")").attr("onmouseout",  "show_chr_id_mouseout(" + (i + 1) + ")");
 
 	chr_region.append("path").attr("id", "chr_" + (i + 1) + "_set")
 	.attr("d", chr_set)
 	.attr("fill", "none")
 	.attr("stroke", "#000")
 	.attr("stroke-width", "2");
+      }
+      function show_chr_id_mouseover(num) {
+	canvas.append("svg:circle").attr("id", "hidde_circle").attr("r", inner_radius * 0.99).attr("fill", "#000").style("opacity", "0.9").attr("cx", circle_horizontal_shift).attr("cy", circle_vertical_shift);
+	if(num < 10) {
+	  canvas.append("svg:text").attr("id", "chr_id").text(num).attr("fill", "White").style("font-size", "240px").attr("x", (circle_horizontal_shift - 60)).attr("y", (circle_vertical_shift + 90));
+	}
+	else {
+	  canvas.append("svg:text").attr("id", "chr_id").text(num).attr("fill", "White").style("font-size", "240px").attr("x", (circle_horizontal_shift - 135)).attr("y", (circle_vertical_shift + 90));
+	}
+      }
+      function show_chr_id_mouseout(num) {
+        canvas.select("#hidde_circle").remove();
+        canvas.select("#chr_id").remove();
       }
 
       //Draw every genes on their coresponding chromosome region

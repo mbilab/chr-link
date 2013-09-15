@@ -38,8 +38,14 @@ body {
   height: 35px; 
 }
 .control_all { 
-  width: 140px; 
+  width: 105px; 
   height: 30px;
+}
+#s_a {
+  margin-left: 5px;
+}
+#t_a {
+  margin-right: 5px;
 }
 #source_block { 
   float:left; 
@@ -90,7 +96,19 @@ body {
   background-color: #606c88; 
   color: White; 
 }
-#reset {
-  margin-top: 80px;
+#m_to_m_reset {
+  width: 100px;
   height: 30px; 
 }
+#s_to_s_reset {
+  width: 60px;
+  height: 30px; 
+  font-size: 16px;
+  border-radius: 5px; 
+  background-color: #FFF; 
+  color: #666; 
+  margin-top: -10px; 
+  cursor: pointer; 
+  float:right; 
+}
+
