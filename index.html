@@ -11,12 +11,12 @@
     <div id="page">
       <div id="circle"></div>
       <div id="s_to_s_tablet">
-	<p class="block_title">Single-to-Single Link<button class="functional_button" onclick="s_to_s_reset()">Reset</button></p><hr />
+	<p class="block_title">Single Link<button class="functional_button" onclick="s_to_s_reset()">Reset</button></p><hr />
 	<input type="text" name="s_to_s_string" placeholder="Typing the pair (ex: 1-2, 3-4, ...)" />
 	<button class="functional_button" onclick="s_to_s_link()">Link</button>
       </div>
       <div id="m_to_m_tablet">
-	<p class="block_title">Multiple-to-Multiple Link<button class="functional_button" onclick="m_to_m_reset()">Reset</button></p><hr />
+	<p class="block_title">Mult-to-Mult Link<button class="functional_button" onclick="m_to_m_reset()">Reset</button></p><hr />
 	<div id="source_block">
 	  <center><p>Source</p></center>
 	  <button id="s_1" class="s_number" onclick="number_button('s_1')">1</button><button id="s_2" class="s_number" onclick="number_button('s_2')">2</button><button id="s_3" class="s_number" onclick="number_button('s_3')">3</button><button id="s_4" class="s_number" onclick="number_button('s_4')">4</button><br />
@@ -130,7 +130,9 @@
       }
 
       //interaction with client
-      var s_tunnel = [], t_tunnel = [];
+      var mm_s_tunnel = [], 
+      mm_t_tunnel = [],
+      ss_tunnel = [];
       function change_button_color(node_name, back_color, font_color) {
 	$(node_name).css("background-color", back_color).css("color", font_color);
       }
@@ -147,28 +149,28 @@
       function all_button(signal) {
 	change_button_color("." + signal + "_number", "#606c88", "White");
 	if(signal == "s") {
-	  s_tunnel.splice(0, s_tunnel.length);
-	  for(var i = 1; i <= CHR_NUMBER; i++) { s_tunnel.push(i); }
+	  mm_s_tunnel.splice(0, mm_s_tunnel.length);
+	  for(var i = 1; i <= CHR_NUMBER; i++) { mm_s_tunnel.push(i); }
 	}
 	else {
-	  t_tunnel.splice(0, s_tunnel.length);
-	  for(var i = 1; i <= CHR_NUMBER; i++) { t_tunnel.push(i); }
+	  mm_t_tunnel.splice(0, mm_s_tunnel.length);
+	  for(var i = 1; i <= CHR_NUMBER; i++) { mm_t_tunnel.push(i); }
 	}
-	for(var i = 0; i < s_tunnel.length; i++) {
-	  for(var j = 0; j < t_tunnel.length; j++) {
-	    sketch_line(s_tunnel[i], t_tunnel[j]);
+	for(var i = 0; i < mm_s_tunnel.length; i++) {
+	  for(var j = 0; j < mm_t_tunnel.length; j++) {
+	    sketch_line(mm_s_tunnel[i], mm_t_tunnel[j]);
 	  }
 	}
       }
       function tunnel_add(signal) {
 	var line = signal.split("_");
 	if(line[0] == "s") {
-	  s_tunnel.push(parseInt(line[1]));
-	  for(var i = 0; i < t_tunnel.length; i++) { sketch_line(line[1], t_tunnel[i]); }
+	  mm_s_tunnel.push(parseInt(line[1]));
+	  for(var i = 0; i < mm_t_tunnel.length; i++) { sketch_line(line[1], mm_t_tunnel[i]); }
 	}
 	else if(line[0] == "t") {
-	  t_tunnel.push(parseInt(line[1]));
-	  for(var i = 0; i < s_tunnel.length; i++) { sketch_line(s_tunnel[i], line[1]); }
+	  mm_t_tunnel.push(parseInt(line[1]));
+	  for(var i = 0; i < mm_s_tunnel.length; i++) { sketch_line(mm_s_tunnel[i], line[1]); }
 	}
 	else {
 	  console.log("Error: function tunnel_push");
@@ -178,14 +180,14 @@
 	var line = signel.split("_");
 	var i = 0;
 	if(line[0] == "s") {
-	  t_tunnel.forEach(function(e) { group.select("#chr" + line[1] + "-" + e + "_line_set").remove(); });
-	  while(s_tunnel[i] != line[1]) { i++ }
-	  s_tunnel.splice(i, 1);
+	  mm_t_tunnel.forEach(function(e) { group.select("#chr" + line[1] + "-" + e + "_line_set").remove(); });
+	  while(mm_s_tunnel[i] != line[1]) { i++ }
+	  mm_s_tunnel.splice(i, 1);
 	}
 	else if(line[0] == "t") {
-	  s_tunnel.forEach(function(e) { group.select("#chr" + e + "-" + line[1] + "_line_set").remove(); });
-	  while(t_tunnel[i] == line[1]) { i++; }
-	  t_tunnel.splice(i, 1);
+	  mm_s_tunnel.forEach(function(e) { group.select("#chr" + e + "-" + line[1] + "_line_set").remove(); });
+	  while(mm_t_tunnel[i] == line[1]) { i++; }
+	  mm_t_tunnel.splice(i, 1);
 	}
 	else {
 	  console.log("Error: function tunnel_delete");
@@ -194,22 +196,25 @@
       function m_to_m_reset() {
 	change_button_color(".s_number", "#FFF", "#666");
 	change_button_color(".t_number", "#FFF", "#666");
-	for(var i = 0; i < s_tunnel.length; i++) {
-	  for(var j = 0; j < t_tunnel.length; j++) {
-	    group.select("#chr" + s_tunnel[i] + "-" + t_tunnel[j] + "_line_set").remove();
+	for(var i = 0; i < mm_s_tunnel.length; i++) {
+	  for(var j = 0; j < mm_t_tunnel.length; j++) {
+	    group.select("#chr" + mm_s_tunnel[i] + "-" + mm_t_tunnel[j] + "_line_set").remove();
 	  }
 	}
-	s_tunnel.splice(0, s_tunnel.length);
-	t_tunnel.splice(0, t_tunnel.length);
+	mm_s_tunnel.splice(0, mm_s_tunnel.length);
+	mm_t_tunnel.splice(0, mm_t_tunnel.length);
       }
       function s_to_s_link() {
 	var text = $("input[type=text]").val().replace(/\s+/g, '');
 	var line = text.split(",");
+	ss_tunnel.splice(0, ss_tunnel.length);
 	line.forEach(function(element) {
 	  var sep = element.split("-");
 	  var source = parseInt(sep[0]);
 	  var target = parseInt(sep[1]);
 	  if( source > 0 && source <= CHR_NUMBER && target > 0 && target <= CHR_NUMBER) {
+	    ss_tunnel.push(source);
+	    ss_tunnel.push(target);
 	    sketch_line(source, target);
 	  }
 	  else {
@@ -218,7 +223,10 @@
 	});
       }
       function s_to_s_reset() {
-	alert('s_to_s reset');
+	for(var i = 0; i < (ss_tunnel.length / 2); i++) {
+	  group.select("#chr" + ss_tunnel[i * 2] + "-" + ss_tunnel[i * 2 + 1] + "_line_set").remove();
+	}
+	ss_tunnel.splice(0, ss_tunnel.length);
       }
 
       //hover to show chr id
