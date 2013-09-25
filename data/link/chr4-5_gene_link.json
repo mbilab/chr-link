@@ -1617,7 +1617,7 @@
 {"s_chr_num":4, "s_gene":"YDR217C", "s_start":903476, "s_end":899547, "t_chr_num":5, "t_gene":"YEL019C", "t_start":121301, "t_end":120498},
 {"s_chr_num":4, "s_gene":"YDR217C", "s_start":903476, "s_end":899547, "t_chr_num":5, "t_gene":"YEL027W", "t_start":100769, "t_end":101251},
 {"s_chr_num":4, "s_gene":"YDR217C", "s_start":903476, "s_end":899547, "t_chr_num":5, "t_gene":"YEL042W", "t_start":73771, "t_end":75327},
-{"s_chr_num":4, "s_gene":"YDR217C", "s_start":903476, "s_end":899547, "t_chr_num":5, "t_gene":"YEL077C", "t_start":4097, "t_end":264},
+{"s_chr_num":4, "s_gene":"YDR217C", "s_start":903476, "s_end":899547, "t_chr_num":5, "t_gene":"YEL077C", "t_start":4097, "t_end":2640},
 {"s_chr_num":4, "s_gene":"YDR217C", "s_start":903476, "s_end":899547, "t_chr_num":5, "t_gene":"YER019W", "t_start":192796, "t_end":194229},
 {"s_chr_num":4, "s_gene":"YDR217C", "s_start":903476, "s_end":899547, "t_chr_num":5, "t_gene":"YER093C", "t_start":347608, "t_end":343316},
 {"s_chr_num":4, "s_gene":"YDR217C", "s_start":903476, "s_end":899547, "t_chr_num":5, "t_gene":"YER095W", "t_start":349976, "t_end":351178},

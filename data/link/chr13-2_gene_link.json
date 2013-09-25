@@ -779,7 +779,7 @@
 {"s_chr_num":13, "s_gene":"YML130C", "s_start":13175, "s_end":11484, "t_chr_num":2, "t_gene":"YBR283C", "t_start":770411, "t_end":768939},
 {"s_chr_num":13, "s_gene":"YML132W", "s_start":7244, "s_end":8383, "t_chr_num":2, "t_gene":"YBR054W", "t_start":343099, "t_end":344133},
 {"s_chr_num":13, "s_gene":"YML132W", "s_start":7244, "s_end":8383, "t_chr_num":2, "t_gene":"YBR159W", "t_start":558679, "t_end":559722},
-{"s_chr_num":13, "s_gene":"YML133C", "s_start":4684, "s_end":461, "t_chr_num":2, "t_gene":"YBL032W", "t_start":160187, "t_end":161332},
+{"s_chr_num":13, "s_gene":"YML133C", "s_start":4684, "s_end":4610, "t_chr_num":2, "t_gene":"YBL032W", "t_start":160187, "t_end":161332},
 {"s_chr_num":13, "s_gene":"YMR001C", "s_start":271136, "s_end":269019, "t_chr_num":2, "t_gene":"YBL084C", "t_start":69442, "t_end":67166},
 {"s_chr_num":13, "s_gene":"YMR001C", "s_start":271136, "s_end":269019, "t_chr_num":2, "t_gene":"YBR017C", "t_start":273703, "t_end":270947},
 {"s_chr_num":13, "s_gene":"YMR001C", "s_start":271136, "s_end":269019, "t_chr_num":2, "t_gene":"YBR045C", "t_start":330090, "t_end":328369},

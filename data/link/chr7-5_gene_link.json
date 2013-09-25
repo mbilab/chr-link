@@ -496,7 +496,7 @@
 {"s_chr_num":7, "s_gene":"YGL122C", "s_start":280529, "s_end":278952, "t_chr_num":5, "t_gene":"YEL059C-A", "t_start":42624, "t_end":42400},
 {"s_chr_num":7, "s_gene":"YGL122C", "s_start":280529, "s_end":278952, "t_chr_num":5, "t_gene":"YEL066W", "t_start":26667, "t_end":27206},
 {"s_chr_num":7, "s_gene":"YGL122C", "s_start":280529, "s_end":278952, "t_chr_num":5, "t_gene":"YEL073C", "t_start":7553, "t_end":7230},
-{"s_chr_num":7, "s_gene":"YGL122C", "s_start":280529, "s_end":278952, "t_chr_num":5, "t_gene":"YEL077C", "t_start":4097, "t_end":264},
+{"s_chr_num":7, "s_gene":"YGL122C", "s_start":280529, "s_end":278952, "t_chr_num":5, "t_gene":"YEL077C", "t_start":4097, "t_end":2640},
 {"s_chr_num":7, "s_gene":"YGL122C", "s_start":280529, "s_end":278952, "t_chr_num":5, "t_gene":"YER003C", "t_start":159117, "t_end":157735},
 {"s_chr_num":7, "s_gene":"YGL122C", "s_start":280529, "s_end":278952, "t_chr_num":5, "t_gene":"YER005W", "t_start":160549, "t_end":162441},
 {"s_chr_num":7, "s_gene":"YGL122C", "s_start":280529, "s_end":278952, "t_chr_num":5, "t_gene":"YER009W", "t_start":172114, "t_end":172491},

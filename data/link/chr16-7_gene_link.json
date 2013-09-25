@@ -1840,7 +1840,7 @@
 {"s_chr_num":16, "s_gene":"YPL274W", "s_start":22938, "s_end":24701, "t_chr_num":7, "t_gene":"YGR284C", "t_start":1061597, "t_end":1060665},
 {"s_chr_num":16, "s_gene":"YPL281C", "s_start":10870, "s_end":9557, "t_chr_num":7, "t_gene":"YGL083W", "t_start":353061, "t_end":355475},
 {"s_chr_num":16, "s_gene":"YPL281C", "s_start":10870, "s_end":9557, "t_chr_num":7, "t_gene":"YGR254W", "t_start":1000932, "t_end":1002245},
-{"s_chr_num":16, "s_gene":"YPL283C", "s_start":6007, "s_end":280, "t_chr_num":7, "t_gene":"YGL120C", "t_start":283943, "t_end":281640},
+{"s_chr_num":16, "s_gene":"YPL283C", "s_start":6007, "s_end":2800, "t_chr_num":7, "t_gene":"YGL120C", "t_start":283943, "t_end":281640},
 {"s_chr_num":16, "s_gene":"YPR003C", "s_start":563765, "s_end":561501, "t_chr_num":7, "t_gene":"YGL008C", "t_start":482671, "t_end":479915},
 {"s_chr_num":16, "s_gene":"YPR004C", "s_start":565038, "s_end":564004, "t_chr_num":7, "t_gene":"YGL122C", "t_start":280529, "t_end":278952},
 {"s_chr_num":16, "s_gene":"YPR004C", "s_start":565038, "s_end":564004, "t_chr_num":7, "t_gene":"YGL124C", "t_start":276720, "t_end":274786},

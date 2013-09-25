@@ -16,24 +16,38 @@
 	<button class="functional_button" onclick="s_to_s_link()">Link</button>
       </div>
       <div id="m_to_m_tablet">
-	<p class="block_title">Mult-to-Mult Link<button class="functional_button" onclick="m_to_m_reset()">Reset</button></p><hr />
+	<p class="block_title">Mult-to-Mult Link</p><hr />
 	<div id="source_block">
 	  <center><p>Source</p></center>
-	  <button id="s_1" class="s_number" onclick="number_button('s_1')">1</button><button id="s_2" class="s_number" onclick="number_button('s_2')">2</button><button id="s_3" class="s_number" onclick="number_button('s_3')">3</button><button id="s_4" class="s_number" onclick="number_button('s_4')">4</button><br />
-	  <button id="s_5" class="s_number" onclick="number_button('s_5')">5</button><button id="s_6" class="s_number" onclick="number_button('s_6')">6</button><button id="s_7" class="s_number" onclick="number_button('s_7')">7</button><button id="s_8" class="s_number" onclick="number_button('s_8')">8</button><br />
-	  <button id="s_9" class="s_number" onclick="number_button('s_9')">9</button><button id="s_10" class="s_number" onclick="number_button('s_10')">10</button><button id="s_11" class="s_number" onclick="number_button('s_11')">11</button><button id="s_12" class="s_number" onclick="number_button('s_12')">12</button><br />
-	  <button id="s_13" class="s_number" onclick="number_button('s_13')">13</button><button id="s_14" class="s_number" onclick="number_button('s_14')">14</button><button id="s_15" class="s_number" onclick="number_button('s_15')">15</button><button id="s_16" class="s_number" onclick="number_button('s_16')">16</button><br />
-	  <button id="s_a" class="all_button" onclick="all_button('s')">All</button>
+	  <button id="s_1" class="s_number" onclick="number_button(mm_s_tunnel, 's', 1)">1</button><button id="s_2" class="s_number" onclick="number_button(mm_s_tunnel, 's', 2)">2</button><button id="s_3" class="s_number" onclick="number_button(mm_s_tunnel, 's', 3)">3</button><button id="s_4" class="s_number" onclick="number_button(mm_s_tunnel, 's', 4)">4</button><br />
+	  <button id="s_5" class="s_number" onclick="number_button(mm_s_tunnel, 's', 5)">5</button><button id="s_6" class="s_number" onclick="number_button(mm_s_tunnel, 's', 6)">6</button><button id="s_7" class="s_number" onclick="number_button(mm_s_tunnel, 's', 7)">7</button><button id="s_8" class="s_number" onclick="number_button(mm_s_tunnel, 's', 8)">8</button><br />
+	  <button id="s_9" class="s_number" onclick="number_button(mm_s_tunnel, 's', 9)">9</button><button id="s_10" class="s_number" onclick="number_button(mm_s_tunnel, 's', 10)">10</button><button id="s_11" class="s_number" onclick="number_button(mm_s_tunnel, 's', 11)">11</button><button id="s_12" class="s_number" onclick="number_button(mm_s_tunnel, 's', 12)">12</button><br />
+	  <button id="s_13" class="s_number" onclick="number_button(mm_s_tunnel, 's', 13)">13</button><button id="s_14" class="s_number" onclick="number_button(mm_s_tunnel, 's', 14)">14</button><button id="s_15" class="s_number" onclick="number_button(mm_s_tunnel, 's', 15)">15</button><button id="s_16" class="s_number" onclick="number_button(mm_s_tunnel, 's', 16)">16</button><br />
+	  <button id="s_a" class="all_button" onclick="all_button(mm_s_tunnel, 's')">All</button>
 	</div>
 	<div id="target_block">
 	  <center><p>Target</p></center>
-	  <button id="t_1" class="t_number" onclick="number_button('t_1')">1</button><button id="t_2" class="t_number" onclick="number_button('t_2')">2</button><button id="t_3" class="t_number" onclick="number_button('t_3')">3</button><button id="t_4" class="t_number" onclick="number_button('t_4')">4</button><br />
-	  <button id="t_5" class="t_number" onclick="number_button('t_5')">5</button><button id="t_6" class="t_number" onclick="number_button('t_6')">6</button><button id="t_7" class="t_number" onclick="number_button('t_7')">7</button><button id="t_8" class="t_number" onclick="number_button('t_8')">8</button><br />
-	  <button id="t_9" class="t_number" onclick="number_button('t_9')">9</button><button id="t_10" class="t_number" onclick="number_button('t_10')">10</button><button id="t_11" class="t_number" onclick="number_button('t_11')">11</button><button id="t_12" class="t_number" onclick="number_button('t_12')">12</button><br />
-	  <button id="t_13" class="t_number" onclick="number_button('t_13')">13</button><button id="t_14" class="t_number" onclick="number_button('t_14')">14</button><button id="t_15" class="t_number" onclick="number_button('t_15')">15</button><button id="t_16" class="t_number" onclick="number_button('t_16')">16</button><br />
-	  <button id="t_a" class="all_button" onclick="all_button('t')">All</button>
+	  <button id="t_1" class="t_number" onclick="number_button(mm_t_tunnel, 't', 1)">1</button><button id="t_2" class="t_number" onclick="number_button(mm_t_tunnel, 't', 2)">2</button><button id="t_3" class="t_number" onclick="number_button(mm_t_tunnel, 't', 3)">3</button><button id="t_4" class="t_number" onclick="number_button(mm_t_tunnel, 't', 4)">4</button><br />
+	  <button id="t_5" class="t_number" onclick="number_button(mm_t_tunnel, 't', 5)">5</button><button id="t_6" class="t_number" onclick="number_button(mm_t_tunnel, 't', 6)">6</button><button id="t_7" class="t_number" onclick="number_button(mm_t_tunnel, 't', 7)">7</button><button id="t_8" class="t_number" onclick="number_button(mm_t_tunnel, 't', 8)">8</button><br />
+	  <button id="t_9" class="t_number" onclick="number_button(mm_t_tunnel, 't', 9)">9</button><button id="t_10" class="t_number" onclick="number_button(mm_t_tunnel, 't', 10)">10</button><button id="t_11" class="t_number" onclick="number_button(mm_t_tunnel, 't', 11)">11</button><button id="t_12" class="t_number" onclick="number_button(mm_t_tunnel, 't', 12)">12</button><br />
+	  <button id="t_13" class="t_number" onclick="number_button(mm_t_tunnel, 't', 13)">13</button><button id="t_14" class="t_number" onclick="number_button(mm_t_tunnel, 't', 14)">14</button><button id="t_15" class="t_number" onclick="number_button(mm_t_tunnel, 't', 15)">15</button><button id="t_16" class="t_number" onclick="number_button(mm_t_tunnel, 't', 16)">16</button><br />
+	  <button id="t_a" class="all_button" onclick="all_button(mm_t_tunnel, 't')">All</button>
 	</div>
-	      </div>
+      </div>
+      <div id="setting_tablet">
+	<p class="block_title">Line Setting</p><hr />
+	<div class="slider">
+	  Tenstion:
+	  <b><output id="tension_range_value" class="rangevalue">70</output></b><br />
+	  <input class="bar" type="range" id="tension_range_input" min="0" max="100"  value="70" onchange="tension_range_value.value=value"/>
+	</div>
+	<br />
+	<div class="slider">
+	  Line width:
+	  <b><output id="width_range_value" class="rangevalue">0.5</output>px</b><br />
+	  <input class="bar" type="range" id="width_range_input" min="0" max="100" value="50" onchange="width_range_value.value=value/100"/>
+	</div>
+      </div>
     </div>
 
     <script>
@@ -49,164 +63,250 @@
       var CHR_NUMBER = 16;
 
       //16 kinds of color for fillng to each chromosome
-      var chr_color = ["#D4C3A7", "#72783C", "#A8A24E", "#B53A3F", "#F32733", "#FE2488", "#F6D3D1", "#F4A441", "#FFC84D", "#F9E956", "#D4DF54", "#03AA58", "#2B954A", "#30368C", "#59A3D4", "#8FCAE8" ];
+      var color = ["#D4C3A7", "#72783C", "#A8A24E", "#B53A3F", "#F32733", "#FE2488", "#F6D3D1", "#F4A441", "#FFC84D", "#F9E956", "#D4DF54", "#6CBB3C", "#387C44", "#30368C", "#59A3D4", "#8FCAE8" ];
+
 
       //Length of each chromosome
-      var length = [229308, 810334, 315994, 1530848, 575675, 269503, 1089753, 561199, 435270, 744905, 662927, 1077048, 923492, 783287, 1090013, 946852];
-      var length_sum = d3.sum(length);
+      var origin_length = [229308, 810334, 315994, 1530848, 575675, 269503, 1089753, 561199, 435270, 744905, 662927, 1077048, 923492, 783287, 1090013, 946852];
+      var length = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
       //The foundation of the circle layout
-      var canvas = d3.select("#circle").append("svg"),
-      group = canvas.append("g").attr("transform","translate(" + circle_horizontal_shift + ", " + circle_vertical_shift +")");
+      var canvas = d3.select("#circle").append("svg");
+      var group = canvas.append("g").attr("transform","translate(" + circle_horizontal_shift + ", " + circle_vertical_shift +")");
+      var pie = d3.layout.pie().value(function(d, i) { return d; }).sort(null); 
+      var arc = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius);
 
-      //Distrubute the region for each chromosome 
-      var chr_region, chr_set, chr_start_angle, chr_end_angle,
-      gap_degree = 20,
-      chr_to_chr_gap = ((CHR_NUMBER * gap_degree / 180) / Math.PI) / CHR_NUMBER,
-      chr_start_angle_set = [],
-      accumulator = 0;
 
-      for(var i = 0; i < CHR_NUMBER; i++) {
+      var path = group.datum(length).selectAll(".chr_region").data(pie).enter()
+      .append("g").attr("id", function(d, i) { return "chr_" + (i + 1) + "_region"; }).attr("class", "chr_region")
+      .append("path").attr("id", function(d, i) { return "chr_" + (i + 1) + "_set"; }).attr("class", "chr_set")
+      .attr("fill", function(d, i) { return color[i]; }).attr("stroke", "#666").attr("stroke-width", "4").attr("d", arc).style("z-index", "1000")
+      .each(function(d) { this._current = d; });
 
-	chr_start_angle = accumulator += chr_to_chr_gap;
-	chr_end_angle = accumulator += ((length[i] / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER));
-	chr_start_angle_set.push(chr_start_angle);
-	chr_set = circle_radius.startAngle(chr_start_angle).endAngle(chr_end_angle);
+      //Tension adjusting slider bar
+      d3.select("#tension_range_input").on("change", function() {
+	d3.selectAll(".line_set").remove();
+	mm_s_tunnel.forEach(function(e_s) {
+	  mm_t_tunnel.forEach(function(e_t) {
+	    sketch_line(e_s, e_t);
+	  });
+	});
+	line.forEach(function(element) {
+	    sketch_line(source, target);
+	});
+      });
+      //Width line adjusting slider bar
+      d3.select("#width_range_input").on("change", function() {
+	d3.selectAll(".line_set").remove();
+	mm_s_tunnel.forEach(function(e_s) {
+	  mm_t_tunnel.forEach(function(e_t) {
+	    sketch_line(e_s, e_t);
+	  });
+	});
+      });
 
-	chr_region = group.append("g").attr("id", "chr_" + (i + 1) + "_region")
-	.attr("onmouseover", "show_chr_id_mouseover(" + (i + 1) + ")")
-	.attr("onmouseout",  "show_chr_id_mouseout(" + (i + 1) + ")");
-
-	chr_region.append("path").attr("id", "chr_" + (i + 1) + "_set")
-	.attr("d", chr_set)
-	.attr("fill", "none")
-	.attr("stroke", "#000")
-	.attr("stroke-width", "2");
+      //Draw the chromosome block with animateion
+      function chr_block() {
+	path = path.data(pie);
+	var blocking = path.transition().duration(1).attrTween("fill", colorTween).transition().duration(750).attrTween("d", arcTween);
+	var count = 0;
+	length.forEach(function(e) { if(e == 1) count++; });
+	if(count != CHR_NUMBER) {
+	  blocking.transition().duration(1).attr("fill", "#FFF").each(function(d, i) { 
+	    //group.selectAll(".chr" + (i + 1)).remove();
+	    //if(d.data != 0) { draw_gene(i + 1); } 
+	  });
+	}
+	else{ for(var i = 1; i <= CHR_NUMBER; i++) { group.selectAll(".chr" + i).remove(); } }
       }
+      function arcTween(a) {
+	var i = d3.interpolate(this._current, a);
+	this._current = i(0);
+	return function(t) { return arc(i(t)); };
+      }
+      function colorTween(a, i) {
+	var j = d3.interpolateString(color[i], color[i]);
+	return function(t) { return j(t); };
+      }
+
 
       //Draw every genes on their coresponding chromosome region
-      for(var i = 1; i <= CHR_NUMBER; i++) { 
-	draw_gene(i);
-      }
-      function draw_gene(i) {
-	d3.json("data/info/chr" + i + "_gene_info.json", function(data) {
+      function draw_gene(num) {
+	d3.tsv("data/origin/chr/chr" + num + ".gene", function(data) {
 
 	  var gene = circle_radius
-	  .startAngle(function(d) { return convert_to_angle(d.chr_num, d.start); })
-	  .endAngle(function(d) { return convert_to_angle(d.chr_num, d.end); });
+	  .startAngle(function(d) { return convert_to_angle(this.parentNode.childNodes[0].__data__.startAngle, this.parentNode.childNodes[0].__data__.endAngle, d.chr, d.start_codon); })
+	  .endAngle(function(d) { return convert_to_angle(this.parentNode.childNodes[0].__data__.startAngle, this.parentNode.childNodes[0].__data__.endAngle, d.chr, d.stop_codon); });
 
-	  group.select("#chr_" + i + "_region").selectAll(".chr" + i).data(data).enter().append("path").attr("class", "chr" + i)
-	  .attr("id", function(d) { return d.code; })
-	  .attr("stroke", chr_color[i - 1])
-	  .attr("d", gene)
-	  .attr("stroke-width", "0.08");
+	  group.selectAll("#chr_" + num + "_region").selectAll(".chr" + num).data(data).enter().append("path").attr("class", "chr" + num)
+	  .attr("id", function(d) { return d.ORF_name; })
+	  .attr("fill", color[num - 1])
+	  .attr("d", gene);
 
 	});
       }
+      function convert_to_angle(chr_start, chr_end, chr_num, position) {
+	return chr_start + (position / origin_length[chr_num - 1]) * (chr_end - chr_start);
+      }
+
       //Draw the line of the relationship
       function sketch_line(source, target) {
 	d3.json("./data/link/chr" + source + "-" + target + "_gene_link.json", function(data) {
 
+	  var tension = d3.selectAll("#tension_range_input")[0][0].value * 0.01;
+	  var width = d3.selectAll("#width_range_input")[0][0].value * 0.01;
+
 	  var line = d3.svg.line.radial().interpolate("basis")
-	  .radius(function(d, i) { if(i == 1 || i == 2) { return inner_radius * 0.6; } else { return inner_radius; } })
+	  .radius(function(d, i) { if(i == 1 || i == 2) { return inner_radius * tension; } else { return inner_radius; } })
 	  .angle(function(d) { return d; });
 
 	  group.select("#chr_"+ source + "_region")
-	  .selectAll("#chr" + source + "-" + target + "_line_set").data([1]).enter().append("g").attr("id", "chr" + source + "-" + target + "_line_set")
+	  .selectAll("#chr" + source + "-" + target + "_line_set").data([1]).enter().append("g").attr("id", "chr" + source + "-" + target + "_line_set").attr("class", "line_set")
 	  .selectAll(".chr" + source + "-" + target + "_line").data(data).enter().append("path").attr("class", "chr" + source + "-" + target + "_line")
 	  .attr("d", function(d){
-	    var start = convert_to_angle(d.s_chr_num, (d.s_start + d.s_end) * 0.5 );
-	    var end = convert_to_angle(d.t_chr_num, (d.t_start + d.t_end ) * 0.5 );
+	    var source_node = this.parentNode.parentNode.childNodes[0].__data__;
+	    var target_node = this.parentNode.parentNode.parentNode.childNodes[d.t_chr_num - 1].childNodes[0].__data__;
+	    var start = convert_to_angle(source_node.startAngle, source_node.endAngle, d.s_chr_num, (d.s_start + d.s_end) * 0.5 );
+	    var end = convert_to_angle(target_node.startAngle, target_node.endAngle, d.t_chr_num, (d.t_start + d.t_end ) * 0.5 );
 	    return line([start, start, end, end]); 
 	  })
-	  .attr("stroke", "#000")
-	  .attr("stroke-width", "0.08")
-	  .attr("stroke", function(d) { return chr_color[d.t_chr_num - 1]; } )
+	  .attr("stroke-width", width)
+	  .attr("stroke", function(d) { return color[d.t_chr_num - 1]; } )
 	  .attr("fill", "none");
 	});
       }
-      function convert_to_angle(num, position) {
-	return chr_start_angle_set[num - 1] + (( position / length_sum) * (2 * Math.PI - chr_to_chr_gap * CHR_NUMBER));
-      }
+
+
 
       //interaction with client
-      var mm_s_tunnel = [], 
-      mm_t_tunnel = [],
-      ss_tunnel = [];
-      function change_button_color(node_name, back_color, font_color) {
-	$(node_name).css("background-color", back_color).css("color", font_color);
+      var mm_s_tunnel = [], mm_t_tunnel = [], ss_tunnel = [], general_tunnel = [];
+
+      function change_button_attribute(node_name, back_color, font_color, text) {
+	/* Change the button color */
+	if(text) { d3.selectAll(node_name).style("background-color", back_color).style("color", font_color).text(text); }
+	else { d3.selectAll(node_name).style("background-color", back_color).style("color", font_color); }
       }
-      function number_button(signal) {
-	if($("#"+signal).css("background-color") == "rgb(255, 255, 255)") {
-	  change_button_color("#"+signal, "#606c88", "White");
-	  tunnel_add(signal);
-	}
-	else {
-	  change_button_color("#"+signal, "#FFF", "#666");
-	  tunnel_delete(signal);
-	}
+      function tunnel_add(tunnel, num) {
+	//Add the number into the tunnel
+	tunnel.push(parseInt(num));
+	//Update the general tunnel
+	general_tunnel = update_general_tunnel();
+	update_length();
       }
-      function all_button(signal) {
-	change_button_color("." + signal + "_number", "#606c88", "White");
-	if(signal == "s") {
-	  mm_s_tunnel.splice(0, mm_s_tunnel.length);
-	  for(var i = 1; i <= CHR_NUMBER; i++) { mm_s_tunnel.push(i); }
+      function tunnel_delete(tunnel, num) {
+	//detete the number from the tunnel
+	tunnel.forEach(function(e, i) {
+	  if(e == num) { tunnel.splice(i, 1); return; }
+	});
+	//Update the general tunnel
+	general_tunnel = update_general_tunnel();
+	update_length();
+      }
+      function update_general_tunnel() {
+	var record;
+	var tunnel = [];
+	mm_s_tunnel.forEach(function(d) { tunnel.push(d); });
+	if(mm_t_tunnel.length != 0) {
+	  mm_t_tunnel.forEach(function(e) {
+	    record = 1;
+	    tunnel.forEach(function(e_t) {
+	      if(e == e_t) { record = 0; return; }
+	    });
+	    if(record) { tunnel.push(e); }
+	  });
 	}
-	else {
-	  mm_t_tunnel.splice(0, mm_s_tunnel.length);
-	  for(var i = 1; i <= CHR_NUMBER; i++) { mm_t_tunnel.push(i); }
-	}
-	for(var i = 0; i < mm_s_tunnel.length; i++) {
-	  for(var j = 0; j < mm_t_tunnel.length; j++) {
-	    sketch_line(mm_s_tunnel[i], mm_t_tunnel[j]);
+	return tunnel;
+      }
+      function update_length() {
+	var record;
+	length.forEach(function(e, i) {
+	  record = 1;
+	  general_tunnel.forEach(function(e_tunnel){
+	    if((i + 1) == e_tunnel) { record = 0; length[i] = origin_length[i]; }
+	  });
+	  if(record) { length[i] = 0; }
+	});
+	if(general_tunnel.length == 0) { length.forEach(function(d, i) { length[i] = 1 }); }
+	/*
+	if(general_tunnel.length == 0) { length.forEach(function(d, i) { length[i] = 1 }); chr_block(0); }
+	else { chr_block(1); }
+	d3.selectAll(".line_set").remove();
+	mm_s_tunnel.forEach(function(e_s) {
+	  mm_t_tunnel.forEach(function(e_t) {
+	    sketch_line(e_s, e_t);
+	  });
+	});
+	*/
+      }
+
+      function action() {
+	//Step1: Draw the chromosome block
+	chr_block();
+	//Step2: Draw the genes on each chromosome
+	length.forEach(function(e, i) {
+	  group.selectAll(".chr" + (i + 1)).remove();
+	  if(e != 0 && e != 1) { draw_gene(i + 1); } 
+	});
+	//Step3: Sketch the linking line genes-to_genes
+	d3.selectAll(".line_set").remove();
+	mm_s_tunnel.forEach(function(e_s) {
+	  mm_t_tunnel.forEach(function(e_t) {
+	    sketch_line(e_s, e_t);
+	  });
+	});
+      }
+
+      function number_button(tunnel, type, num) {
+	for(var i = 0; i < tunnel.length; i++) {
+	  if(tunnel[i] == num) {
+	    change_button_attribute("#" + type + "_" + num, "#FFF", "#666", null);
+	    tunnel_delete(tunnel, num);
+	    change_button_attribute("#" + type + "_a", "#FFF", "#666", "All");
+	    action();
+	    return;
 	  }
 	}
+	change_button_attribute("#" + type + "_" + num, color[num - 1], "White", null);
+	tunnel_add(tunnel, num);
+	if(tunnel.length == CHR_NUMBER) { change_button_attribute("#" + type + "_a", color[num -1], "White", "Clean"); }
+	else { change_button_attribute("#" + type + "_a", "#FFF", "#666", "All"); }
+	action();
       }
-      function tunnel_add(signal) {
-	var line = signal.split("_");
-	if(line[0] == "s") {
-	  mm_s_tunnel.push(parseInt(line[1]));
-	  for(var i = 0; i < mm_t_tunnel.length; i++) { sketch_line(line[1], mm_t_tunnel[i]); }
-	}
-	else if(line[0] == "t") {
-	  mm_t_tunnel.push(parseInt(line[1]));
-	  for(var i = 0; i < mm_s_tunnel.length; i++) { sketch_line(mm_s_tunnel[i], line[1]); }
-	}
-	else {
-	  console.log("Error: function tunnel_push");
-	}
-      }
-      function tunnel_delete(signel) {
-	var line = signel.split("_");
-	var i = 0;
-	if(line[0] == "s") {
-	  mm_t_tunnel.forEach(function(e) { group.select("#chr" + line[1] + "-" + e + "_line_set").remove(); });
-	  while(mm_s_tunnel[i] != line[1]) { i++ }
-	  mm_s_tunnel.splice(i, 1);
-	}
-	else if(line[0] == "t") {
-	  mm_s_tunnel.forEach(function(e) { group.select("#chr" + e + "-" + line[1] + "_line_set").remove(); });
-	  while(mm_t_tunnel[i] == line[1]) { i++; }
-	  mm_t_tunnel.splice(i, 1);
-	}
-	else {
-	  console.log("Error: function tunnel_delete");
-	}
-      }
-      function m_to_m_reset() {
-	change_button_color(".s_number", "#FFF", "#666");
-	change_button_color(".t_number", "#FFF", "#666");
-	for(var i = 0; i < mm_s_tunnel.length; i++) {
-	  for(var j = 0; j < mm_t_tunnel.length; j++) {
-	    group.select("#chr" + mm_s_tunnel[i] + "-" + mm_t_tunnel[j] + "_line_set").remove();
+      function all_button(tunnel, type) {
+	var same_count;
+	if(tunnel.length != CHR_NUMBER) {
+	  for(var i = 1; i <= CHR_NUMBER; i++) {
+	    same_count = 0;
+	    for(var j = 0; j < tunnel.length; j++) {
+	      if(tunnel[j] == i) { same_count++; }
+	    }
+	    if(same_count == 0) { 
+	      change_button_attribute("#" + type + "_" + i, color[i - 1], "White", null);
+	      tunnel_add(tunnel, i);
+	    }
+	    else if(same_count == 1) {
+	      change_button_attribute("#" + type + "_" + i, color[i - 1], "White", null);
+	    }
+	    else {
+	      console.log("Error: In function number_button, an unexpected brnach.");
+	      console.log("Description: In the type 's', same_count must be 0 or 1.");
+	    }
 	  }
+	  change_button_attribute("#" + type + "_a", "#606c88", "White", "Clean");
 	}
-	mm_s_tunnel.splice(0, mm_s_tunnel.length);
-	mm_t_tunnel.splice(0, mm_t_tunnel.length);
+	else {
+	  for(var i = 1; i <= CHR_NUMBER; i++) {
+	    tunnel_delete(tunnel, i);
+	    change_button_attribute("#" + type + "_" + i, "#FFF", "#666", null);
+	  }
+	  change_button_attribute("#" + type + "_a", "#FFF", "#666", "All");
+	}
+	action();
       }
       function s_to_s_link() {
 	var text = $("input[type=text]").val().replace(/\s+/g, '');
 	var line = text.split(",");
+	var record;
 	ss_tunnel.splice(0, ss_tunnel.length);
 	line.forEach(function(element) {
 	  var sep = element.split("-");
@@ -215,6 +315,19 @@
 	  if( source > 0 && source <= CHR_NUMBER && target > 0 && target <= CHR_NUMBER) {
 	    ss_tunnel.push(source);
 	    ss_tunnel.push(target);
+	    ss_tunnel.forEach(function(e_ss) {
+	      record = 1;
+	      general_tunnel.forEach(function(e_g) {
+		if(e_ss == e_g) { record = 0; return; }
+	      });
+	      if(record) { general_tunnel.push(e_ss); }
+	    });
+	    update_length();
+	    chr_block();
+	    length.forEach(function(e, i) {
+	      group.selectAll(".chr" + (i + 1)).remove();
+	      if(e != 0 && e != 1) { draw_gene(i + 1); } 
+	    });
 	    sketch_line(source, target);
 	  }
 	  else {
@@ -230,6 +343,7 @@
       }
 
       //hover to show chr id
+      /*
       function show_chr_id_mouseover(num) {
 	canvas.append("svg:circle").attr("id", "hidde_circle").attr("r", inner_radius * 0.99).attr("fill", "#000").style("opacity", "0.9").attr("cx", circle_horizontal_shift).attr("cy", circle_vertical_shift);
 	if(num < 10) {
@@ -240,9 +354,10 @@
 	}
       }
       function show_chr_id_mouseout(num) {
-        canvas.select("#hidde_circle").remove();
-        canvas.select("#chr_id").remove();
+	canvas.select("#hidde_circle").remove();
+	canvas.select("#chr_id").remove();
       }
+      */
 
 
     </script>

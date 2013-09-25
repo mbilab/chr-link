@@ -266,7 +266,7 @@
 {"s_chr_num":11, "s_gene":"YKL049C", "s_start":346408, "s_end":345719, "t_chr_num":13, "t_gene":"YML117W", "t_start":34243, "t_end":37647},
 {"s_chr_num":11, "s_gene":"YKL049C", "s_start":346408, "s_end":345719, "t_chr_num":13, "t_gene":"YML123C", "t_start":25801, "t_end":24038},
 {"s_chr_num":11, "s_gene":"YKL049C", "s_start":346408, "s_end":345719, "t_chr_num":13, "t_gene":"YML124C", "t_start":23684, "t_end":22049},
-{"s_chr_num":11, "s_gene":"YKL049C", "s_start":346408, "s_end":345719, "t_chr_num":13, "t_gene":"YML133C", "t_start":4684, "t_end":461},
+{"s_chr_num":11, "s_gene":"YKL049C", "s_start":346408, "s_end":345719, "t_chr_num":13, "t_gene":"YML133C", "t_start":4684, "t_end":4610},
 {"s_chr_num":11, "s_gene":"YKL049C", "s_start":346408, "s_end":345719, "t_chr_num":13, "t_gene":"YMR001C", "t_start":271136, "t_end":269019},
 {"s_chr_num":11, "s_gene":"YKL049C", "s_start":346408, "s_end":345719, "t_chr_num":13, "t_gene":"YMR005W", "t_start":276045, "t_end":277211},
 {"s_chr_num":11, "s_gene":"YKL049C", "s_start":346408, "s_end":345719, "t_chr_num":13, "t_gene":"YMR012W", "t_start":291133, "t_end":294966},

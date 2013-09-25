@@ -1567,7 +1567,7 @@
 {"s_chr_num":14, "s_gene":"YNL255C", "s_start":167791, "s_end":167330, "t_chr_num":12, "t_gene":"YLL045C", "t_start":48628, "t_end":47858},
 {"s_chr_num":14, "s_gene":"YNL255C", "s_start":167791, "s_end":167330, "t_chr_num":12, "t_gene":"YLL049W", "t_start":40665, "t_end":41204},
 {"s_chr_num":14, "s_gene":"YNL255C", "s_start":167791, "s_end":167330, "t_chr_num":12, "t_gene":"YLL066C", "t_start":9836, "t_end":6120},
-{"s_chr_num":14, "s_gene":"YNL255C", "s_start":167791, "s_end":167330, "t_chr_num":12, "t_gene":"YLL067C", "t_start":4301, "t_end":585},
+{"s_chr_num":14, "s_gene":"YNL255C", "s_start":167791, "s_end":167330, "t_chr_num":12, "t_gene":"YLL067C", "t_start":4301, "t_end":5850},
 {"s_chr_num":14, "s_gene":"YNL255C", "s_start":167791, "s_end":167330, "t_chr_num":12, "t_gene":"YLR003C", "t_start":157729, "t_end":156854},
 {"s_chr_num":14, "s_gene":"YNL255C", "s_start":167791, "s_end":167330, "t_chr_num":12, "t_gene":"YLR005W", "t_start":160048, "t_end":161433},
 {"s_chr_num":14, "s_gene":"YNL255C", "s_start":167791, "s_end":167330, "t_chr_num":12, "t_gene":"YLR007W", "t_start":164391, "t_end":165401},
