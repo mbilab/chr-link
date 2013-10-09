@@ -116,6 +116,18 @@
 	  });
 	});
       });
+      //Animate switch
+      function animate_switch() {
+	if(animate_value) { animate_value = 0; time = 750; }
+	else { animate_value = 1; time = 0; }
+      }
+      //Fix switch
+      function fix_switch() {
+	if(fix_value) { fix_value = 0; }
+	else { fix_value = 1; }
+	update_length();
+	action();
+      }
 
       //Draw the chromosome block with animateion
       function chr_block() {
@@ -123,10 +135,8 @@
 	var blocking = path
 	.transition().duration(1).attrTween("fill", colorTween)
 	.transition().duration(time).attrTween("d", arcTween);
-	var count = 0;
-	chr_length.forEach(function(e) { if(e == 1) count++; });
-	if(count != CHR_NUMBER) { blocking.transition().duration(1).attr("fill", "#FFF"); }
-	else{ for(var i = 1; i <= CHR_NUMBER; i++) { group.selectAll(".chr" + i).remove(); } }
+	if(general_tunnel.length == 0) { for(var i = 1; i <= CHR_NUMBER; i++) { group.selectAll(".chr" + i).remove(); } }
+	else{ blocking.transition().duration(1).attr("fill", "#FFF"); }
       }
       function arcTween(a) {
 	console.log(a);
@@ -191,6 +201,8 @@
       var mm_s_tunnel = [], mm_t_tunnel = [], ss_tunnel = [], general_tunnel = [];
       var mode = 0;
       var time = 750;
+      var fix_value = 0;
+      var animate_value = 0;
 
       function change_button_attribute(node_name, back_color, font_color, text) {
 	/* Change the button color */
@@ -200,50 +212,46 @@
       function tunnel_add(tunnel, num) {
 	//Add the number into the tunnel
 	tunnel.push(parseInt(num));
+	var index = check_tunnel_number_index(general_tunnel, num);
+	if(index != -1) { console.log("already have number in the general_tunnel"); }
+	else { general_tunnel.push(parseInt(num)); }
       }
       function tunnel_delete(tunnel, num) {
 	//detete the number from the tunnel
 	tunnel.forEach(function(e, i) {
 	  if(e == num) { tunnel.splice(i, 1); return; }
 	});
+	var index = check_tunnel_number_index(tunnel, num);
+	if(index != -1) { tunnel.splice(index, 1); }
+	else { console.log("Can't not find the number in the tunnel"); }
+	index = check_tunnel_number_index(general_tunnel, num);
+	if(index != -1) { general_tunnel.splice(index, 1); }
+	else { console.log("Can't not find the number in the general_tunnel"); }
       }
-      function update_general_tunnel() {
-	var record;
-	var tunnel = [];
-	mm_s_tunnel.forEach(function(d) { tunnel.push(d); });
-	if(mm_t_tunnel.length != 0) {
-	  mm_t_tunnel.forEach(function(e) {
-	    record = 1;
-	    tunnel.forEach(function(e_t) {
-	      if(e == e_t) { record = 0; return; }
-	    });
-	    if(record) { tunnel.push(e); }
-	  });
-	}
-	return tunnel;
+      function check_tunnel_number_index(tunnel, num) {
+	var index = -1;
+	tunnel.forEach(function(e, i) {
+	  if(e == num) { index = i; return; }
+	});
+	return index;
       }
       function update_length() {
-	var record;
-	if(mode) {
-	  chr_length.forEach(function(e, i) {
-	    record = 1;
-	    general_tunnel.forEach(function(e_tunnel){
-	      if((i + 1) == e_tunnel) { record = 0; chr_length[i] = 1; }
-	    });
-	    if(record) { chr_length[i] = 0; }
-	  });
-	  if(general_tunnel.length == 0) { chr_length.forEach(function(d, i) { chr_length[i] = 1 }); }
+	if(general_tunnel.length == 0) {
+	  for(var i = 0; i < CHR_NUMBER; i++) { chr_length[i] = 1; }
 	}
 	else {
-	  chr_length.forEach(function(e, i) {
-	    record = 1;
-	    general_tunnel.forEach(function(e_tunnel){
-	      if((i + 1) == e_tunnel) { record = 0; chr_length[i] = origin_chr_length[i]; }
+	  for(var i = 0; i < CHR_NUMBER; i++) { chr_length[i] = 0; }
+	  if(fix_value) { 
+	    general_tunnel.forEach(function(element) {
+	      chr_length[element - 1] = 1;
 	    });
-	    if(record) { chr_length[i] = 0; }
-	  });
-	}	
-	if(general_tunnel.length == 0) { chr_length.forEach(function(d, i) { chr_length[i] = 1 }); }
+	  }
+	  else {
+	    general_tunnel.forEach(function(element) {
+	      chr_length[element - 1] = origin_chr_length[element - 1];
+	    });
+	  }
+	}
       }
       
       function action() {
@@ -284,7 +292,6 @@
 	for(var i = 1; i <= CHR_NUMBER; i++) { group.selectAll(".chr" + i).remove(); }
 	group.selectAll(".line_set").remove();
 
-	general_tunnel = update_general_tunnel();
 	update_length();
 	chr_block();
       }
@@ -316,26 +323,23 @@
 	    tunnel_add(tunnel, num);
 	  }
 	}
-	general_tunnel = update_general_tunnel();
 	update_length();
 	action();
       }
       function all_button(tunnel, type) {
 	tunnel.splice(0, tunnel.length);
 	for(var i = 1; i <= CHR_NUMBER; i++) {
-	  tunnel.push(i);
+	  tunnel_add(tunnel, i);
 	  change_button_attribute("#" + type + "_" + i, color[i - 1], "White", null);
 	}
-	general_tunnel = update_general_tunnel();
 	update_length();
 	action();
       }
       function clean_button(tunnel, type) {
 	for(var i = 1; i <= CHR_NUMBER; i++) {
-	  tunnel.splice(0, tunnel.length);
+	  tunnel_delete(tunnel, i);
 	  change_button_attribute("#" + type + "_" + i, "#FFF", "#666", null);
 	}
-	general_tunnel = update_general_tunnel();
 	update_length();
 	chr_block();
       }
