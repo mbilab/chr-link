@@ -4,24 +4,22 @@ body {
   color: #666; 
 }
 #page { 
-  width: 960px; 
   margin: 0 auto;
 }
 #circle { 
-  width: 640px; 
   float:left; 
 }
-button.functional_button { 
+#reset { 
   width: 60px;
   height: 30px; 
   font-size: 16px;
   border-radius: 5px; 
   background-color: #FFF; 
   color: #666; 
-  cursor: pointer; 
-  float:right; 
+  cursor: pointer;
+  float: right;
 }
-button.functional_button:hover { 
+#reset:hover { 
   background-color: #606c88; 
   color: White; 
 }
@@ -51,13 +49,18 @@ button.functional_button:hover {
   margin: 7px 0px 0px 5px; 
 }
 
+#mode_tablet {
+  float:right;
+  width: 320px;
+}
+
 /* Multiple to multiple block */
-#m_to_m_tablet { 
+#chr_select_tablet { 
   width: 320px; 
   float:right; 
-  margin-top: 20px; 
+  margin-top: 10px;
 }
-#m_to_m_tablet center p { 
+#chr_select_tablet center p { 
   font-size:16px; 
   margin-bottom: 0px; 
   border: 0px; 
@@ -70,8 +73,8 @@ button.functional_button:hover {
   background-color: #FFF; 
   font-size: 16px;
 }
-.all_button { 
-  width: 140px; 
+.mm_function_button { 
+  width: 70px; 
   height: 30px;
   margin-top: 5px;
   border-radius: 5px; 
@@ -80,7 +83,7 @@ button.functional_button:hover {
   font-size: 16px;
   cursor: pointer;
 }
-.all_button:hover { 
+.mm_function_button:hover { 
   background-color: #606c88; 
   color: White; 
 }
@@ -97,6 +100,7 @@ button.functional_button:hover {
   width: 320px; 
   float:right; 
   margin-top: 10px; 
+  margin-bottom: 20px;
 }
 
 .slider {

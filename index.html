@@ -10,42 +10,54 @@
   <body>
     <div id="page">
       <div id="circle"></div>
-      <div id="s_to_s_tablet">
-	<p class="block_title">Single Link<button class="functional_button" onclick="s_to_s_reset()">Reset</button></p><hr />
-	<input type="text" name="s_to_s_string" placeholder="Typing the pair (ex: 1-2, 3-4, ...)" />
-	<button class="functional_button" onclick="s_to_s_link()">Link</button>
-      </div>
-      <div id="m_to_m_tablet">
-	<p class="block_title">Mult-to-Mult Link</p><hr />
-	<div id="source_block">
-	  <center><p>Source</p></center>
-	  <button id="s_1" class="s_number" onclick="number_button(mm_s_tunnel, 's', 1)">1</button><button id="s_2" class="s_number" onclick="number_button(mm_s_tunnel, 's', 2)">2</button><button id="s_3" class="s_number" onclick="number_button(mm_s_tunnel, 's', 3)">3</button><button id="s_4" class="s_number" onclick="number_button(mm_s_tunnel, 's', 4)">4</button><br />
-	  <button id="s_5" class="s_number" onclick="number_button(mm_s_tunnel, 's', 5)">5</button><button id="s_6" class="s_number" onclick="number_button(mm_s_tunnel, 's', 6)">6</button><button id="s_7" class="s_number" onclick="number_button(mm_s_tunnel, 's', 7)">7</button><button id="s_8" class="s_number" onclick="number_button(mm_s_tunnel, 's', 8)">8</button><br />
-	  <button id="s_9" class="s_number" onclick="number_button(mm_s_tunnel, 's', 9)">9</button><button id="s_10" class="s_number" onclick="number_button(mm_s_tunnel, 's', 10)">10</button><button id="s_11" class="s_number" onclick="number_button(mm_s_tunnel, 's', 11)">11</button><button id="s_12" class="s_number" onclick="number_button(mm_s_tunnel, 's', 12)">12</button><br />
-	  <button id="s_13" class="s_number" onclick="number_button(mm_s_tunnel, 's', 13)">13</button><button id="s_14" class="s_number" onclick="number_button(mm_s_tunnel, 's', 14)">14</button><button id="s_15" class="s_number" onclick="number_button(mm_s_tunnel, 's', 15)">15</button><button id="s_16" class="s_number" onclick="number_button(mm_s_tunnel, 's', 16)">16</button><br />
-	  <button id="s_a" class="all_button" onclick="all_button(mm_s_tunnel, 's')">All</button>
+      <div id="tablet" style="float:right; width:320px; ">
+	<div id="mode_tablet">
+	  <p class="block_title">Mode</p><hr />
+	  <div style="margin: 20px 0px 0px 10px;">
+	    <input type="radio" name="mode" value="1" onclick="more_one_switch(this)" checked="checked" />Multiple linking
+	  </div>
+	  <div style="margin: 10px 0px 0px 10px;">
+	    <input type="radio" name="mode" value="0" onclick="only_one(this)" />Only one-to-one linking
+	  </div>
 	</div>
-	<div id="target_block">
-	  <center><p>Target</p></center>
-	  <button id="t_1" class="t_number" onclick="number_button(mm_t_tunnel, 't', 1)">1</button><button id="t_2" class="t_number" onclick="number_button(mm_t_tunnel, 't', 2)">2</button><button id="t_3" class="t_number" onclick="number_button(mm_t_tunnel, 't', 3)">3</button><button id="t_4" class="t_number" onclick="number_button(mm_t_tunnel, 't', 4)">4</button><br />
-	  <button id="t_5" class="t_number" onclick="number_button(mm_t_tunnel, 't', 5)">5</button><button id="t_6" class="t_number" onclick="number_button(mm_t_tunnel, 't', 6)">6</button><button id="t_7" class="t_number" onclick="number_button(mm_t_tunnel, 't', 7)">7</button><button id="t_8" class="t_number" onclick="number_button(mm_t_tunnel, 't', 8)">8</button><br />
-	  <button id="t_9" class="t_number" onclick="number_button(mm_t_tunnel, 't', 9)">9</button><button id="t_10" class="t_number" onclick="number_button(mm_t_tunnel, 't', 10)">10</button><button id="t_11" class="t_number" onclick="number_button(mm_t_tunnel, 't', 11)">11</button><button id="t_12" class="t_number" onclick="number_button(mm_t_tunnel, 't', 12)">12</button><br />
-	  <button id="t_13" class="t_number" onclick="number_button(mm_t_tunnel, 't', 13)">13</button><button id="t_14" class="t_number" onclick="number_button(mm_t_tunnel, 't', 14)">14</button><button id="t_15" class="t_number" onclick="number_button(mm_t_tunnel, 't', 15)">15</button><button id="t_16" class="t_number" onclick="number_button(mm_t_tunnel, 't', 16)">16</button><br />
-	  <button id="t_a" class="all_button" onclick="all_button(mm_t_tunnel, 't')">All</button>
+	<div id="chr_select_tablet">
+	  <p class="block_title">Select Chromosomes</p><hr />
+	  <div id="source_block">
+	    <center><p>Source</p></center>
+	    <button id="s_1" class="s_number" onclick="number_button(mm_s_tunnel, 's', 1)">1</button><button id="s_2" class="s_number" onclick="number_button(mm_s_tunnel, 's', 2)">2</button><button id="s_3" class="s_number" onclick="number_button(mm_s_tunnel, 's', 3)">3</button><button id="s_4" class="s_number" onclick="number_button(mm_s_tunnel, 's', 4)">4</button><br />
+	    <button id="s_5" class="s_number" onclick="number_button(mm_s_tunnel, 's', 5)">5</button><button id="s_6" class="s_number" onclick="number_button(mm_s_tunnel, 's', 6)">6</button><button id="s_7" class="s_number" onclick="number_button(mm_s_tunnel, 's', 7)">7</button><button id="s_8" class="s_number" onclick="number_button(mm_s_tunnel, 's', 8)">8</button><br />
+	    <button id="s_9" class="s_number" onclick="number_button(mm_s_tunnel, 's', 9)">9</button><button id="s_10" class="s_number" onclick="number_button(mm_s_tunnel, 's', 10)">10</button><button id="s_11" class="s_number" onclick="number_button(mm_s_tunnel, 's', 11)">11</button><button id="s_12" class="s_number" onclick="number_button(mm_s_tunnel, 's', 12)">12</button><br />
+	    <button id="s_13" class="s_number" onclick="number_button(mm_s_tunnel, 's', 13)">13</button><button id="s_14" class="s_number" onclick="number_button(mm_s_tunnel, 's', 14)">14</button><button id="s_15" class="s_number" onclick="number_button(mm_s_tunnel, 's', 15)">15</button><button id="s_16" class="s_number" onclick="number_button(mm_s_tunnel, 's', 16)">16</button><br />
+	    <button id="s_a" class="mm_function_button" onclick="all_button(mm_s_tunnel, 's')">All</button><button id="s_c" class="mm_function_button" onclick="clean_button(mm_s_tunnel, 's')">Clean</button>
+	  </div>
+	  <div id="target_block">
+	    <center><p>Target</p></center>
+	    <button id="t_1" class="t_number" onclick="number_button(mm_t_tunnel, 't', 1)">1</button><button id="t_2" class="t_number" onclick="number_button(mm_t_tunnel, 't', 2)">2</button><button id="t_3" class="t_number" onclick="number_button(mm_t_tunnel, 't', 3)">3</button><button id="t_4" class="t_number" onclick="number_button(mm_t_tunnel, 't', 4)">4</button><br />
+	    <button id="t_5" class="t_number" onclick="number_button(mm_t_tunnel, 't', 5)">5</button><button id="t_6" class="t_number" onclick="number_button(mm_t_tunnel, 't', 6)">6</button><button id="t_7" class="t_number" onclick="number_button(mm_t_tunnel, 't', 7)">7</button><button id="t_8" class="t_number" onclick="number_button(mm_t_tunnel, 't', 8)">8</button><br />
+	    <button id="t_9" class="t_number" onclick="number_button(mm_t_tunnel, 't', 9)">9</button><button id="t_10" class="t_number" onclick="number_button(mm_t_tunnel, 't', 10)">10</button><button id="t_11" class="t_number" onclick="number_button(mm_t_tunnel, 't', 11)">11</button><button id="t_12" class="t_number" onclick="number_button(mm_t_tunnel, 't', 12)">12</button><br />
+	    <button id="t_13" class="t_number" onclick="number_button(mm_t_tunnel, 't', 13)">13</button><button id="t_14" class="t_number" onclick="number_button(mm_t_tunnel, 't', 14)">14</button><button id="t_15" class="t_number" onclick="number_button(mm_t_tunnel, 't', 15)">15</button><button id="t_16" class="t_number" onclick="number_button(mm_t_tunnel, 't', 16)">16</button><br />
+	    <button id="t_a" class="mm_function_button" onclick="all_button(mm_t_tunnel, 't')">All</button><button id="t_c" class="mm_function_button" onclick="clean_button(mm_t_tunnel, 't')">Clean</button>
+	  </div>
 	</div>
-      </div>
-      <div id="setting_tablet">
-	<p class="block_title">Line Setting</p><hr />
-	<div class="slider">
-	  Tenstion:
-	  <b><output id="tension_range_value" class="rangevalue">70</output></b><br />
-	  <input class="bar" type="range" id="tension_range_input" min="0" max="100"  value="70" onchange="tension_range_value.value=value"/>
-	</div>
-	<br />
-	<div class="slider">
-	  Line width:
-	  <b><output id="width_range_value" class="rangevalue">0.5</output>px</b><br />
-	  <input class="bar" type="range" id="width_range_input" min="0" max="100" value="50" onchange="width_range_value.value=value/100"/>
+	<div id="setting_tablet">
+	  <p class="block_title">Setting</p><hr />
+	  <div class="slider">
+	    Line tenstion:
+	    <b><output id="tension_range_value" class="rangevalue">70</output></b><br />
+	    <input class="bar" type="range" id="tension_range_input" min="0" max="100"  value="70" onchange="tension_range_value.value=value"/>
+	  </div>
+	  <br />
+	  <div class="slider">
+	    Line width:
+	    <b><output id="width_range_value" class="rangevalue">0.5</output>px</b><br />
+	    <input class="bar" type="range" id="width_range_input" min="0" max="100" value="50" onchange="width_range_value.value=value/100"/>
+	  </div>
+	  <div style="margin: 40px 0px 0px 10px;">
+	    <input type="checkbox" name="animate" onclick="animate_switch()" />Close the animation
+	  </div>
+	  <div style="margin: 10px 0px 10px 10px;">
+	    <input type="checkbox" name="animate" onclick="fix_switch()" />Fix the length of chromosomes
+	  </div>
 	</div>
       </div>
     </div>
@@ -53,11 +65,15 @@
     <script>
 
       //Adjustable circle layout which base on the size of user's screen
-      var outer_radius = 960 * 0.5 * 0.5,
+      var page_height = window.innerHeight;
+      var page_width = window.innerWidth * 0.9;
+      var outer_radius =  ((page_height * 0.9) > (page_width - 320)) ? ((page_width - 320) / 2) : (page_height * 0.9 * 0.5),
       inner_radius = outer_radius * 0.8,
-      circle_horizontal_shift = 320,
-      circle_vertical_shift = outer_radius * 1.2,
+      circle_horizontal_shift = outer_radius * 1.05,
+      circle_vertical_shift = outer_radius * 1.1,
       circle_radius = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius);
+      $("#page").css("width", (outer_radius * 2.3 + 320) + "px");
+      $("#circle").css("width", (outer_radius * 2.3) + "px");
 
       //Amounts of the chromosomes
       var CHR_NUMBER = 16;
@@ -65,10 +81,9 @@
       //16 kinds of color for fillng to each chromosome
       var color = ["#D4C3A7", "#72783C", "#A8A24E", "#B53A3F", "#F32733", "#FE2488", "#F6D3D1", "#F4A441", "#FFC84D", "#F9E956", "#D4DF54", "#6CBB3C", "#387C44", "#30368C", "#59A3D4", "#8FCAE8" ];
 
-
       //Length of each chromosome
-      var origin_length = [229308, 810334, 315994, 1530848, 575675, 269503, 1089753, 561199, 435270, 744905, 662927, 1077048, 923492, 783287, 1090013, 946852];
-      var length = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+      var origin_chr_length = [229308, 810334, 315994, 1530848, 575675, 269503, 1089753, 561199, 435270, 744905, 662927, 1077048, 923492, 783287, 1090013, 946852];
+      var chr_length = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
       //The foundation of the circle layout
       var canvas = d3.select("#circle").append("svg");
@@ -76,12 +91,12 @@
       var pie = d3.layout.pie().value(function(d, i) { return d; }).sort(null); 
       var arc = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius);
 
-
-      var path = group.datum(length).selectAll(".chr_region").data(pie).enter()
+      var path = group.datum(chr_length).selectAll(".chr_region").data(pie).enter()
       .append("g").attr("id", function(d, i) { return "chr_" + (i + 1) + "_region"; }).attr("class", "chr_region")
       .append("path").attr("id", function(d, i) { return "chr_" + (i + 1) + "_set"; }).attr("class", "chr_set")
-      .attr("fill", function(d, i) { return color[i]; }).attr("stroke", "#666").attr("stroke-width", "4").attr("d", arc).style("z-index", "1000")
+      .attr("fill", function(d, i) { return color[i]; }).attr("stroke", "#666").attr("stroke-width", "4").attr("d", arc)
       .each(function(d) { this._current = d; });
+
 
       //Tension adjusting slider bar
       d3.select("#tension_range_input").on("change", function() {
@@ -90,9 +105,6 @@
 	  mm_t_tunnel.forEach(function(e_t) {
 	    sketch_line(e_s, e_t);
 	  });
-	});
-	line.forEach(function(element) {
-	    sketch_line(source, target);
 	});
       });
       //Width line adjusting slider bar
@@ -108,18 +120,16 @@
       //Draw the chromosome block with animateion
       function chr_block() {
 	path = path.data(pie);
-	var blocking = path.transition().duration(1).attrTween("fill", colorTween).transition().duration(750).attrTween("d", arcTween);
+	var blocking = path
+	.transition().duration(1).attrTween("fill", colorTween)
+	.transition().duration(time).attrTween("d", arcTween);
 	var count = 0;
-	length.forEach(function(e) { if(e == 1) count++; });
-	if(count != CHR_NUMBER) {
-	  blocking.transition().duration(1).attr("fill", "#FFF").each(function(d, i) { 
-	    //group.selectAll(".chr" + (i + 1)).remove();
-	    //if(d.data != 0) { draw_gene(i + 1); } 
-	  });
-	}
+	chr_length.forEach(function(e) { if(e == 1) count++; });
+	if(count != CHR_NUMBER) { blocking.transition().duration(1).attr("fill", "#FFF"); }
 	else{ for(var i = 1; i <= CHR_NUMBER; i++) { group.selectAll(".chr" + i).remove(); } }
       }
       function arcTween(a) {
+	console.log(a);
 	var i = d3.interpolate(this._current, a);
 	this._current = i(0);
 	return function(t) { return arc(i(t)); };
@@ -133,7 +143,6 @@
       //Draw every genes on their coresponding chromosome region
       function draw_gene(num) {
 	d3.tsv("data/origin/chr/chr" + num + ".gene", function(data) {
-
 	  var gene = circle_radius
 	  .startAngle(function(d) { return convert_to_angle(this.parentNode.childNodes[0].__data__.startAngle, this.parentNode.childNodes[0].__data__.endAngle, d.chr, d.start_codon); })
 	  .endAngle(function(d) { return convert_to_angle(this.parentNode.childNodes[0].__data__.startAngle, this.parentNode.childNodes[0].__data__.endAngle, d.chr, d.stop_codon); });
@@ -146,7 +155,7 @@
 	});
       }
       function convert_to_angle(chr_start, chr_end, chr_num, position) {
-	return chr_start + (position / origin_length[chr_num - 1]) * (chr_end - chr_start);
+	return chr_start + (position / origin_chr_length[chr_num - 1]) * (chr_end - chr_start);
       }
 
       //Draw the line of the relationship
@@ -171,7 +180,7 @@
 	    return line([start, start, end, end]); 
 	  })
 	  .attr("stroke-width", width)
-	  .attr("stroke", function(d) { return color[d.t_chr_num - 1]; } )
+	  .attr("stroke", function(d) { if(mode) return "#000"; else return color[d.t_chr_num - 1]; } )
 	  .attr("fill", "none");
 	});
       }
@@ -180,6 +189,8 @@
 
       //interaction with client
       var mm_s_tunnel = [], mm_t_tunnel = [], ss_tunnel = [], general_tunnel = [];
+      var mode = 0;
+      var time = 750;
 
       function change_button_attribute(node_name, back_color, font_color, text) {
 	/* Change the button color */
@@ -189,18 +200,12 @@
       function tunnel_add(tunnel, num) {
 	//Add the number into the tunnel
 	tunnel.push(parseInt(num));
-	//Update the general tunnel
-	general_tunnel = update_general_tunnel();
-	update_length();
       }
       function tunnel_delete(tunnel, num) {
 	//detete the number from the tunnel
 	tunnel.forEach(function(e, i) {
 	  if(e == num) { tunnel.splice(i, 1); return; }
 	});
-	//Update the general tunnel
-	general_tunnel = update_general_tunnel();
-	update_length();
       }
       function update_general_tunnel() {
 	var record;
@@ -219,127 +224,154 @@
       }
       function update_length() {
 	var record;
-	length.forEach(function(e, i) {
-	  record = 1;
-	  general_tunnel.forEach(function(e_tunnel){
-	    if((i + 1) == e_tunnel) { record = 0; length[i] = origin_length[i]; }
+	if(mode) {
+	  chr_length.forEach(function(e, i) {
+	    record = 1;
+	    general_tunnel.forEach(function(e_tunnel){
+	      if((i + 1) == e_tunnel) { record = 0; chr_length[i] = 1; }
+	    });
+	    if(record) { chr_length[i] = 0; }
 	  });
-	  if(record) { length[i] = 0; }
-	});
-	if(general_tunnel.length == 0) { length.forEach(function(d, i) { length[i] = 1 }); }
-	/*
-	if(general_tunnel.length == 0) { length.forEach(function(d, i) { length[i] = 1 }); chr_block(0); }
-	else { chr_block(1); }
-	d3.selectAll(".line_set").remove();
-	mm_s_tunnel.forEach(function(e_s) {
-	  mm_t_tunnel.forEach(function(e_t) {
-	    sketch_line(e_s, e_t);
+	  if(general_tunnel.length == 0) { chr_length.forEach(function(d, i) { chr_length[i] = 1 }); }
+	}
+	else {
+	  chr_length.forEach(function(e, i) {
+	    record = 1;
+	    general_tunnel.forEach(function(e_tunnel){
+	      if((i + 1) == e_tunnel) { record = 0; chr_length[i] = origin_chr_length[i]; }
+	    });
+	    if(record) { chr_length[i] = 0; }
 	  });
-	});
-	*/
+	}	
+	if(general_tunnel.length == 0) { chr_length.forEach(function(d, i) { chr_length[i] = 1 }); }
       }
-
+      
       function action() {
 	//Step1: Draw the chromosome block
 	chr_block();
-	//Step2: Draw the genes on each chromosome
-	length.forEach(function(e, i) {
-	  group.selectAll(".chr" + (i + 1)).remove();
-	  if(e != 0 && e != 1) { draw_gene(i + 1); } 
-	});
-	//Step3: Sketch the linking line genes-to_genes
 	d3.selectAll(".line_set").remove();
-	mm_s_tunnel.forEach(function(e_s) {
-	  mm_t_tunnel.forEach(function(e_t) {
-	    sketch_line(e_s, e_t);
+	setTimeout(function() {
+	  //Step2: Draw the genes on each chromosome
+	  chr_length.forEach(function(e, i) {
+	    group.selectAll(".chr" + (i + 1)).remove();
+	    if(mode == 0 && e != 0 && e != 1) { draw_gene(i + 1); } 
+	    else if(e == 1) { draw_gene(i + 1); }
 	  });
-	});
+	  setTimeout(function(){
+	    //Step3: Sketch the linking line genes-to_genes
+	    mm_s_tunnel.forEach(function(e_s) {
+	      mm_t_tunnel.forEach(function(e_t) {
+		sketch_line(e_s, e_t);
+	      });
+	    });
+	  }, time);
+	}, time);
       }
 
+      //Click to drive events
+      function reset() {
+
+	//clean the tunnel and white the button
+	for(var i = 1; i <= CHR_NUMBER; i++) {
+	  change_button_attribute("#s_" + i, "#FFF", "#666", null);
+	  change_button_attribute("#t_" + i, "#FFF", "#666", null);
+	}
+	mm_s_tunnel.splice(0, mm_s_tunnel.length);
+	mm_t_tunnel.splice(0, mm_t_tunnel.length);
+
+
+	//Clean the genes line and the linking line
+	for(var i = 1; i <= CHR_NUMBER; i++) { group.selectAll(".chr" + i).remove(); }
+	group.selectAll(".line_set").remove();
+
+	general_tunnel = update_general_tunnel();
+	update_length();
+	chr_block();
+      }
       function number_button(tunnel, type, num) {
-	for(var i = 0; i < tunnel.length; i++) {
-	  if(tunnel[i] == num) {
+	var num_exist = 0;
+	if(mode) {
+	  if(tunnel[0] == num) {
 	    change_button_attribute("#" + type + "_" + num, "#FFF", "#666", null);
-	    tunnel_delete(tunnel, num);
-	    change_button_attribute("#" + type + "_a", "#FFF", "#666", "All");
-	    action();
-	    return;
+	    tunnel.splice(0, tunnel.length);
+	  }
+	  else {
+	    change_button_attribute("#" + type + "_" + tunnel[0], "#FFF", "#666", null);
+	    tunnel.splice(0, tunnel.length);
+	    change_button_attribute("#" + type + "_" + num, color[num - 1], "White", null);
+	    tunnel.push(num);
 	  }
 	}
-	change_button_attribute("#" + type + "_" + num, color[num - 1], "White", null);
-	tunnel_add(tunnel, num);
-	if(tunnel.length == CHR_NUMBER) { change_button_attribute("#" + type + "_a", color[num -1], "White", "Clean"); }
-	else { change_button_attribute("#" + type + "_a", "#FFF", "#666", "All"); }
+	else {
+	  for(var i = 0; i < tunnel.length; i++) {
+	    if(num == tunnel[i]) { num_exist = 1; break }
+	    else { num_exist = 0; }
+	  }
+	  if(num_exist == 1) {
+	    change_button_attribute("#" + type + "_" + num, "#FFF", "#666", null);
+	    tunnel_delete(tunnel, num);
+	  }
+	  else {
+	    change_button_attribute("#" + type + "_" + num, color[num - 1], "White", null);
+	    tunnel_add(tunnel, num);
+	  }
+	}
+	general_tunnel = update_general_tunnel();
+	update_length();
 	action();
       }
       function all_button(tunnel, type) {
-	var same_count;
-	if(tunnel.length != CHR_NUMBER) {
-	  for(var i = 1; i <= CHR_NUMBER; i++) {
-	    same_count = 0;
-	    for(var j = 0; j < tunnel.length; j++) {
-	      if(tunnel[j] == i) { same_count++; }
-	    }
-	    if(same_count == 0) { 
-	      change_button_attribute("#" + type + "_" + i, color[i - 1], "White", null);
-	      tunnel_add(tunnel, i);
-	    }
-	    else if(same_count == 1) {
-	      change_button_attribute("#" + type + "_" + i, color[i - 1], "White", null);
-	    }
-	    else {
-	      console.log("Error: In function number_button, an unexpected brnach.");
-	      console.log("Description: In the type 's', same_count must be 0 or 1.");
-	    }
-	  }
-	  change_button_attribute("#" + type + "_a", "#606c88", "White", "Clean");
+	tunnel.splice(0, tunnel.length);
+	for(var i = 1; i <= CHR_NUMBER; i++) {
+	  tunnel.push(i);
+	  change_button_attribute("#" + type + "_" + i, color[i - 1], "White", null);
 	}
-	else {
-	  for(var i = 1; i <= CHR_NUMBER; i++) {
-	    tunnel_delete(tunnel, i);
-	    change_button_attribute("#" + type + "_" + i, "#FFF", "#666", null);
-	  }
-	  change_button_attribute("#" + type + "_a", "#FFF", "#666", "All");
-	}
+	general_tunnel = update_general_tunnel();
+	update_length();
 	action();
       }
-      function s_to_s_link() {
+      function clean_button(tunnel, type) {
+	for(var i = 1; i <= CHR_NUMBER; i++) {
+	  tunnel.splice(0, tunnel.length);
+	  change_button_attribute("#" + type + "_" + i, "#FFF", "#666", null);
+	}
+	general_tunnel = update_general_tunnel();
+	update_length();
+	chr_block();
+      }
+      function only_one(signal) {
+	reset();
+	if(parseInt(signal.value)) {
+	  signal.value = 0;
+	  d3.selectAll(".mm_function_button").style("display", "inline");
+	  mode = 0;
+	  time = 750;
+	  
+	}
+	else {
+	  signal.value = 1;
+	  d3.selectAll(".mm_function_button").style("display", "none");
+	  mode = 1;
+	  time = 1;
+	}
+      }
+
+
+      function print() {
+	console.log("------------------------------");
+	console.log("mm_s_tunnel");
+	console.log(mm_s_tunnel);
+	console.log("mm_t_tunnel");
+	console.log(mm_t_tunnel);
+	console.log("general_tunnel");
+	console.log(general_tunnel);
+	console.log("chr_length");
+	console.log(chr_length);
+      }
+
+      function link() {
 	var text = $("input[type=text]").val().replace(/\s+/g, '');
 	var line = text.split(",");
-	var record;
-	ss_tunnel.splice(0, ss_tunnel.length);
-	line.forEach(function(element) {
-	  var sep = element.split("-");
-	  var source = parseInt(sep[0]);
-	  var target = parseInt(sep[1]);
-	  if( source > 0 && source <= CHR_NUMBER && target > 0 && target <= CHR_NUMBER) {
-	    ss_tunnel.push(source);
-	    ss_tunnel.push(target);
-	    ss_tunnel.forEach(function(e_ss) {
-	      record = 1;
-	      general_tunnel.forEach(function(e_g) {
-		if(e_ss == e_g) { record = 0; return; }
-	      });
-	      if(record) { general_tunnel.push(e_ss); }
-	    });
-	    update_length();
-	    chr_block();
-	    length.forEach(function(e, i) {
-	      group.selectAll(".chr" + (i + 1)).remove();
-	      if(e != 0 && e != 1) { draw_gene(i + 1); } 
-	    });
-	    sketch_line(source, target);
-	  }
-	  else {
-	    alert("Error: Wrong formatting input.");
-	  }
-	});
-      }
-      function s_to_s_reset() {
-	for(var i = 0; i < (ss_tunnel.length / 2); i++) {
-	  group.select("#chr" + ss_tunnel[i * 2] + "-" + ss_tunnel[i * 2 + 1] + "_line_set").remove();
-	}
-	ss_tunnel.splice(0, ss_tunnel.length);
       }
 
       //hover to show chr id
