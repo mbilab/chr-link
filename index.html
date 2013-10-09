@@ -14,10 +14,10 @@
 	<div id="mode_tablet">
 	  <p class="block_title">Mode</p><hr />
 	  <div style="margin: 20px 0px 0px 10px;">
-	    <input type="radio" name="mode" value="1" onclick="more_one_switch(this)" checked="checked" />Multiple linking
+	    <input type="radio" name="mode" onclick="more_one()" checked="checked" />Multiple linking
 	  </div>
 	  <div style="margin: 10px 0px 0px 10px;">
-	    <input type="radio" name="mode" value="0" onclick="only_one(this)" />Only one-to-one linking
+	    <input type="radio" name="mode" onclick="only_one()" />Only one-to-one linking
 	  </div>
 	</div>
 	<div id="chr_select_tablet">
@@ -97,6 +97,16 @@
       .attr("fill", function(d, i) { return color[i]; }).attr("stroke", "#666").attr("stroke-width", "4").attr("d", arc)
       .each(function(d) { this._current = d; });
 
+      function more_one() {
+	reset();
+	mode = 0;
+	d3.selectAll(".mm_function_button").style("display", "inline");
+      }
+      function only_one() {
+	reset();
+	mode = 1;
+	d3.selectAll(".mm_function_button").style("display", "none");
+      }
 
       //Tension adjusting slider bar
       d3.select("#tension_range_input").on("change", function() {
@@ -139,7 +149,6 @@
 	else{ blocking.transition().duration(1).attr("fill", "#FFF"); }
       }
       function arcTween(a) {
-	console.log(a);
 	var i = d3.interpolate(this._current, a);
 	this._current = i(0);
 	return function(t) { return arc(i(t)); };
@@ -262,8 +271,7 @@
 	  //Step2: Draw the genes on each chromosome
 	  chr_length.forEach(function(e, i) {
 	    group.selectAll(".chr" + (i + 1)).remove();
-	    if(mode == 0 && e != 0 && e != 1) { draw_gene(i + 1); } 
-	    else if(e == 1) { draw_gene(i + 1); }
+	    if(e != 0 && general_tunnel.length != 0) { draw_gene(i + 1); } 
 	  });
 	  setTimeout(function(){
 	    //Step3: Sketch the linking line genes-to_genes
@@ -281,12 +289,11 @@
 
 	//clean the tunnel and white the button
 	for(var i = 1; i <= CHR_NUMBER; i++) {
+	  tunnel_delete(mm_s_tunnel, i);
 	  change_button_attribute("#s_" + i, "#FFF", "#666", null);
+	  tunnel_delete(mm_t_tunnel, i);
 	  change_button_attribute("#t_" + i, "#FFF", "#666", null);
 	}
-	mm_s_tunnel.splice(0, mm_s_tunnel.length);
-	mm_t_tunnel.splice(0, mm_t_tunnel.length);
-
 
 	//Clean the genes line and the linking line
 	for(var i = 1; i <= CHR_NUMBER; i++) { group.selectAll(".chr" + i).remove(); }
@@ -300,13 +307,13 @@
 	if(mode) {
 	  if(tunnel[0] == num) {
 	    change_button_attribute("#" + type + "_" + num, "#FFF", "#666", null);
-	    tunnel.splice(0, tunnel.length);
+	    tunnel_delete(tunnel, num);
 	  }
 	  else {
 	    change_button_attribute("#" + type + "_" + tunnel[0], "#FFF", "#666", null);
-	    tunnel.splice(0, tunnel.length);
+	    tunnel_delete(tunnel, tunnel[0]);
 	    change_button_attribute("#" + type + "_" + num, color[num - 1], "White", null);
-	    tunnel.push(num);
+	    tunnel_add(tunnel, num);
 	  }
 	}
 	else {
@@ -343,39 +350,13 @@
 	update_length();
 	chr_block();
       }
-      function only_one(signal) {
-	reset();
-	if(parseInt(signal.value)) {
-	  signal.value = 0;
-	  d3.selectAll(".mm_function_button").style("display", "inline");
-	  mode = 0;
-	  time = 750;
-	  
-	}
-	else {
-	  signal.value = 1;
-	  d3.selectAll(".mm_function_button").style("display", "none");
-	  mode = 1;
-	  time = 1;
-	}
-      }
-
 
       function print() {
 	console.log("------------------------------");
-	console.log("mm_s_tunnel");
 	console.log(mm_s_tunnel);
-	console.log("mm_t_tunnel");
 	console.log(mm_t_tunnel);
-	console.log("general_tunnel");
 	console.log(general_tunnel);
-	console.log("chr_length");
 	console.log(chr_length);
-      }
-
-      function link() {
-	var text = $("input[type=text]").val().replace(/\s+/g, '');
-	var line = text.split(",");
       }
 
       //hover to show chr id
