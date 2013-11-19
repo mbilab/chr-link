@@ -10,6 +10,7 @@ function app(source, target) {
     var source_length = chr_length[source - 1];
     var target_length = chr_length[target - 1];
     var ppi_cor = [];
+    console.log(data);
     data = JSON.parse(data);
     data.forEach(function (e) {
       var s = (e.s_start + e.s_end) / (2 * source_length);
