@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+  body { position: relative; height: 1500px; } 
+  input { position: absolute; }
+  svg, canvas { position: absolute; }
+  .axis text { font: 10px sans-serif; }
+  .axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }
+  .axis path { display: none; }
+</style>
+<body>
+  <input type="text" id="resolution" value="30" />
+  <input type="text" id="sigma" value="1" />
+  <input type="text" id="size" value="50" />
+  <input type="submit" />
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script>
+
+    //Get the argument
+    var resolution = parseInt(document.querySelector("#resolution").value);
+    var sigma = parseInt(document.querySelector("#sigma").value);
+    var size = parseInt(document.querySelector("#size").value);
+
+    //Main
+    var CHR_NUMBER = 16;
+    for(var i = 1; i <= CHR_NUMBER; i++) {
+      for(var j = 1; j <= CHR_NUMBER; j++) {
+	block(i , j);
+      }
+    }
+
+    //Draw the axis
+    var graph = d3.select("body").append("svg").append("g").attr("transform", "translate(30, 80)");
+    var x_axis = graph.append("g").attr("id", "x-axis");
+    var y_axis = graph.append("g").attr("id", "y-axis");
+    var color = d3.scale.category20b();
+    for(var i = 1; i <= CHR_NUMBER; i++) {
+      x_axis.append("rect").attr("id", "x-" + i).attr("class", "x-axis-block")
+      .attr("width", size).attr("height", size / 4)
+      .attr("fill", color(i - 1)).attr("x", i * size).attr("y", 0);
+      x_axis.append("text").attr("id", "x-text-" + i).attr("class", "x-text")
+      .attr("x", size * (i + 0.5)).attr("y", -size / 6)
+      .text(i).attr("text-anchor", "middle");
+
+      y_axis.append("rect").attr("id", "y-" + i).attr("class", "y-axis-block")
+      .attr("width", size / 4).attr("height", size)
+      .attr("fill", color(i - 1)).attr("x", size * 0.75).attr("y", (i - 0.75) * size);
+      y_axis.append("text").attr("id", "y-text-" + i).attr("class", "y-text")
+      .attr("y", size * (i - 0.125)).attr("x", size / 2)
+      .text(i).attr("text-anchor", "end");
+    }
+
+    //Read the data
+    function block(source, target) {
+      d3.json("data/cor/chr" + source + "-" + target + "_cor.json", function(cor) {
+
+	//Create a heatmap matrix, which is a 2-dim array
+	var heatmap = new Array(resolution);
+	for(var i = 0; i < resolution; i++) {
+	  heatmap[i] = new Array(resolution);
+	}
+	for(var i = 0; i < resolution; i++) {
+	  for(var j = 0; j < resolution; j++) {
+	    heatmap[i][j] = 0;
+	  }
+	}
+
+	//Round the value by the resolution
+	cor.forEach(function (e) {
+	  var temp_s = Math.round(resolution * e[0]);
+	  var temp_t = Math.round(resolution * e[1]);
+	  temp_s = (temp_s == resolution) ? (temp_s - 1) : (temp_s);
+	  temp_t = (temp_t == resolution) ? (temp_t - 1) : (temp_t);
+	  heatmap[temp_s][temp_t] += 1;
+	});
+	cor = JSON.stringify(cor);
+
+	//Recod the heatmap position which is the ppi coordinate
+	var list = [];
+	for(var i = 0; i < resolution; i++) {
+	  for(var j = 0; j < resolution; j++) {
+	    if(heatmap[i][j] != 0) {
+	      list.push([i, j]);
+	    }
+	  }
+	}
+
+	//Calculate the heatmap values
+	for(var i = 0; i < resolution; i++) {
+	  for(var j = 0; j < resolution; j++) {
+	    list.forEach(function(e) {
+	      if(i != e[0] && j != e[1]) {
+		heatmap[i][j] += gaussian(e[0], e[1], i, j, sigma);
+	      }
+	    });
+	  }
+	}
+
+	//Draw the heamap
+	var dx = heatmap[0].length;
+	var dy = heatmap.length;
+	var max = 0;
+	heatmap.forEach(function(e) {
+	  if(d3.max(e) > max) {
+	    max = d3.max(e);
+	  }
+	});
+	var color = d3.scale.linear()
+	  .domain([3*max/4, max/2, max/4, 0])
+	  .range(["#0a0", "#ee0", "#eb9", "#fff"]);
+
+	d3.select("body").append("canvas")
+	  .attr("width", dx)
+	  .attr("height", dy)
+	  .style("width", size + "px")
+	  .style("height", size + "px")
+	  .style("margin-left", (30 + size * source) + "px")
+	  .style("margin-top", (40 + size * (target - 0.75)) + "px")
+	  .call(drawImage);
+
+
+	// Compute the pixel colors; scaled by CSS.
+	function drawImage(canvas) {
+	  var context = canvas.node().getContext("2d"),
+	      image = context.createImageData(dx, dy);
+
+	  for (var y = 0, p = -1; y < dy; ++y) {
+	    for (var x = 0; x < dx; ++x) {
+	      var c = d3.rgb(color(heatmap[y][x]));
+	      image.data[++p] = c.r;
+	      image.data[++p] = c.g;
+	      image.data[++p] = c.b;
+	      image.data[++p] = 255;
+	    }
+	  }
+	  context.putImageData(image, 0, 0);
+	}
+      });
+    }
+
+    //Gaussian Distribution
+    function gaussian(cx, cy, x, y, s) {
+      var coefficient = 1 / (s * Math.sqrt(2 * Math.PI));
+      var distance = Math.pow(x - cx, 2) + Math.pow(y - cy, 2);
+      var power = -distance / (2 * s * s)
+	return coefficient * Math.exp(power);
+    }
+  </script>
