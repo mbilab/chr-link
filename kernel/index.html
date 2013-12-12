@@ -87,32 +87,6 @@
     function draw_block(source, target) {
       d3.json("data/cor/" + resolution + "/chr" + source + "-" + target + "_cor.json", function(cor) {
 
-	//Create a heatmap matrix, which is a 2-dim array
-	/*
-	var heatmap = new Array(resolution);
-	for(var i = 0; i < resolution; i++) {
-	  heatmap[i] = new Array(resolution);
-	}
-	for(var i = 0; i < resolution; i++) {
-	  for(var j = 0; j < resolution; j++) {
-	    heatmap[i][j] = 0;
-	  }
-	}
-
-	//Round the value by the resolution
-	cor.forEach(function (e) {
-	  var temp_s = Math.round(resolution * e[0]);
-	  var temp_t = Math.round(resolution * e[1]);
-	  temp_s = (temp_s == resolution) ? (temp_s - 1) : (temp_s);
-	  temp_t = (temp_t == resolution) ? (temp_t - 1) : (temp_t);
-	  heatmap[temp_s][temp_t] += 1;
-	});
-	cor = JSON.stringify(cor);
-	*/
-	//console.log(cor);
-	//cor = JSON.stringify(cor);
-	//console.log(cor);
-
 	//Recod the heatmap position which is the ppi coordinate
 	d3.json("data/cor/" + resolution + "/chr" + source + "-" + target + "_list.json", function(list) {
 	  //Calculate the heatmap values
