@@ -1,135 +1,130 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<link rel="stylesheet" href="./style.css">
-<body>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./style.css">
+    <title>Chr-link</title>
+  </head>
+  <body>
     <div id="header"></div>
     <div id="container"></div>
     <div id="aside">
-      <form>
-	<input type="text" id="resolution" class="form-control" maxlength="4" value="20" />
-	<label>Resolution</label><br />
-	<input type="text" id="sigma" class="form-control" maxlength="4" value="1" />
-	<label>Sigma</label><br />
-	<br />
-	<button id="run" type="button" class="btn btn-primary">Run</button>
-      <form>
+      <span class="">Resolution</span><br />
+      <select id="resolution" class="form-control select-style">
+	<option value="10">10</option>
+	<option value="20">20</option>
+	<option value="30">30</option>
+	<option value="40">40</option>
+	<option value="50">50</option>
+	<option value="60">60</option>
+      </select>
+      <span class="">Sigma</span><br />
+      <select id="sigma" class="form-control select-style">
+	<option value="1" class="sigma_value">1</option>
+	<option value="5" class="sigma_value">5</option>
+	<option value="10" class="sigma_value">10</option>
+      </select>
+      <br />
+      <br />
+      <br />
+      <div class="slider">
+	<span class="text-color">Max value: </span>
+	<output id="max-value" class="fat-letter"></output><br /><br />
+	<span class="text-color">Max Threshold color: </span>
+	<output id="color_range_value" class="fat-letter">100</output><span> %</span>
+	<output id="threshold-value" class="fat-letter"></output><br />
+	<input id="color-adjust" type="range" min="0" max="100"  value="100" onchange="color_range_value.value=value"/>
+	<div id="color-gradient"></div>
+      </div>
     </div>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
-  <script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script>
 
-    //Set parameters
-    var CHR_NUMBER = 16;
-    var resolution = parseInt(document.querySelector("#resolution").value);
-    var sigma = parseInt(document.querySelector("#sigma").value);
-    //var resolution = 30;
-    //var sigma = 1;
-    var size = (screen.width * 0.7) / CHR_NUMBER;
-    var constant = 2 * sigma * sigma;
-    var coefficient = 1 / (sigma * Math.sqrt(2 * Math.PI));
+      var CHR_NUMBER = 16;
+      var resolution = parseInt(document.querySelector("#resolution").value);
+      var sigma = parseInt(document.querySelector("#sigma").value);
+      var size = (window.innerWidth * 0.7) / CHR_NUMBER;
+      var value_color = ["#fff", "#e4e124", "#e7d", "#003e3e", "#111"];
+      var zoom = 1;
+      var matrix;
 
-    //Main
-    for(var i = 1; i <= CHR_NUMBER; i++) {
-      for(var j = 1; j <= CHR_NUMBER; j++) {
-	draw_block(j , i);
+      var header = d3.select("#header")
+      .style("position", "fixed")
+      .style("height", size + "px")
+      .style("width", window.innerWidth + "px")
+      .style("background-color", "#111")
+      .style("top", "0")
+      .style("z-index", "100")
+      .append("svg");
+      var x_axis = header.append("g").attr("id", "x-axis");
+      var container = d3.select("#container")
+      .style("height", (CHR_NUMBER + 1) * size + "px")
+      .style("width", window.innerWidth * 0.8 + "px")
+      .style("margin-top", (size * 0.75) + "px")
+      var y_axis = container.append("svg").append("g").attr("id", "y-axis");
+
+      //Draw the axis
+      var chr_color = d3.scale.category20b();
+      for(var i = 1; i <= CHR_NUMBER; i++) {
+	x_axis.append("rect").attr("id", "x-" + i).attr("class", "x-axis-block")
+	  .attr("width", size).attr("height", size / 4)
+	  .attr("x", (i - 0.25) * size).attr("y", 3 * size / 4)
+	  .attr("fill", chr_color(i - 1));
+	x_axis.append("text").attr("id", "x-text-" + i).attr("class", "x-text")
+	  .attr("x", size * (i + 0.25)).attr("y", size / 1.75)
+	  .text(i).attr("text-anchor", "middle").attr("fill", "White");
+
+	y_axis.append("rect").attr("id", "y-" + i).attr("class", "y-axis-block")
+	  .attr("width", size / 4).attr("height", size)
+	  .attr("x", size / 2).attr("y", (i - 0.75) * size)
+	  .attr("fill", chr_color(i - 1));
+	y_axis.append("text").attr("id", "y-text-" + i).attr("class", "y-text")
+	  .attr("y", size * (i - 0.125)).attr("x", size / 3)
+	  .text(i).attr("text-anchor", "end").attr("fill", "White");
       }
-    }
 
-    var header = d3.select("#header")
-    .style("position", "fixed")
-    .style("height", size + "px")
-    .style("width", screen.width + "px")
-    .style("background-color", "#111")
-    .style("top", "0")
-    .style("z-index", "100")
-    .append("svg");
-    var x_axis = header.append("g").attr("id", "x-axis");
-    var container = d3.select("#container")
-    .style("height", (CHR_NUMBER + 1) * size + "px")
-    .style("width", screen.width * 0.8 + "px")
-    .style("margin-top", (size * 0.75) + "px")
-    var y_axis = container.append("svg").append("g").attr("id", "y-axis");
+      var aside = d3.select("#aside")
+      .style("background-color", "#111")
+      .style("position", "fixed")
+      .style("top", size + "px")
+      .style("left", window.innerWidth * 0.75 + "px")
+      .style("width", window.innerWidth * 0.2 + "px")
+      .style("height", window.innerHeight + "px")
+      .style("z-index", "50");
 
-    //Draw the axis
-    var chr_color = d3.scale.category20b();
-    for(var i = 1; i <= CHR_NUMBER; i++) {
-      x_axis.append("rect").attr("id", "x-" + i).attr("class", "x-axis-block")
-      .attr("width", size).attr("height", size / 4)
-      .attr("x", (i - 0.25) * size).attr("y", 3 * size / 4)
-      .attr("fill", chr_color(i - 1));
-      x_axis.append("text").attr("id", "x-text-" + i).attr("class", "x-text")
-      .attr("x", size * (i + 0.25)).attr("y", size / 1.75)
-      .text(i).attr("text-anchor", "middle").attr("fill", "White");
-
-
-      y_axis.append("rect").attr("id", "y-" + i).attr("class", "y-axis-block")
-      .attr("width", size / 4).attr("height", size)
-      .attr("x", size / 2).attr("y", (i - 0.75) * size)
-      .attr("fill", chr_color(i - 1));
-      y_axis.append("text").attr("id", "y-text-" + i).attr("class", "y-text")
-      .attr("y", size * (i - 0.125)).attr("x", size / 3)
-      .text(i).attr("text-anchor", "end").attr("fill", "White");
-    }
-
-    var aside = d3.select("#aside")
-    .style("background-color", "#111")
-    .style("position", "fixed")
-    .style("top", size + "px")
-    .style("left", screen.width * 0.75 + "px")
-    .style("width", screen.width * 0.2 + "px")
-    .style("height", screen.height + "px")
-    .style("z-index", "50");
-
-    value_color = ["#fff", "#e4e124", "#e7d", "#003e3e", "#111"];
-
-
-    //Read the data
-    var block = d3.select("#container").append("g").attr("id", "block");
-    function draw_block(source, target) {
-      d3.json("data/cor/" + resolution + "/chr" + source + "-" + target + "_cor.json", function(cor) {
-
-	//Recod the heatmap position which is the ppi coordinate
-	d3.json("data/cor/" + resolution + "/chr" + source + "-" + target + "_list.json", function(list) {
-	  //Calculate the heatmap values
-	  for(var i = 0; i < resolution; i++) {
-	    for(var j = 0; j < resolution; j++) {
-	      list.forEach(function(e) {
-		if(i != e[0] && j != e[1]) {
-		  cor[i][j] += gaussian(e[0], e[1], i, j);
-		}
-	      });
-	    }
-	  }
-
-	  //Draw the heatmap
-	  var max = 0;
-	  cor.forEach(function(e) {
-	    if(d3.max(e) > max) {
-	      max = d3.max(e);
-	    }
-	  });
-	  var color = d3.scale.linear()
-	    .domain([0, max/4, max/2, 3 * max/4, max])
-	    .domain([max, 3 * max/4, max/2, max/4, 0])
-	    .range(value_color);
+      var block = d3.select("#container").append("g").attr("id", "block");
+      function drawing(resolution, sigma, zoom) {
+	d3.json("./new_data/matrix/r" + resolution + "_s" + sigma + ".json", function(err, data) {
+	  matrix = data;
 
 	  block.append("canvas")
-	    .attr("width", resolution)
-	    .attr("height", resolution)
-	    .style("width", size + "px")
-	    .style("height", size + "px")
-	    .style("position", "absolute")
-	    .style("left", size * (source - 0.25) + "px")
-	    .style("top", size * (target) + "px")
-	    .call(drawImage);
+	  .attr("width", resolution * CHR_NUMBER)
+	  .attr("height", resolution * CHR_NUMBER)
+	  .style("position", "absolute")
+	  .style("width", size * CHR_NUMBER + "px")
+	  .style("height", size * CHR_NUMBER + "px")
+	  .style("top", function(d) { return size + "px"; })
+	  .style("left", function (d) { return size * 0.75 + "px"; })
+	  .call(drawImage);
 
-	  // Compute the pixel colors; scaled by CSS.
 	  function drawImage(canvas) {
-	    var context = canvas.node().getContext("2d"),
-		image = context.createImageData(resolution, resolution);
-
-	    for (var y = 0, p = -1; y < resolution; ++y) {
-	      for (var x = 0; x < resolution; ++x) {
-		var c = d3.rgb(color(cor[y][x]));
+	    var max = 0;
+	    data.forEach(function(e) {
+	      if(d3.max(e) > max) {
+		max = d3.max(e);
+	      }
+	    });
+	    
+	    d3.select("#resolution-value").text(resolution);
+	    d3.select("#sigma-value").text(sigma);
+	    d3.select("#max-value").text(parseInt(10000 * max) / 10000);
+	    d3.select("#threshold-value").text(parseInt(10000 * zoom * max) / 10000);
+	    var color = d3.scale.linear().domain([0 * zoom, zoom * max/4, zoom * max/2, zoom * 3 * max/4, zoom * max]).range(value_color);
+	    var context = canvas.node().getContext("2d");
+	    var image = context.createImageData(resolution * CHR_NUMBER, resolution * CHR_NUMBER);
+	    for (var y = 0, p = -1; y < resolution * CHR_NUMBER; ++y) {
+	      for (var x = 0; x < resolution * CHR_NUMBER; ++x) {
+		var c = d3.rgb(color(matrix[y][x]));
 		image.data[++p] = c.r;
 		image.data[++p] = c.g;
 		image.data[++p] = c.b;
@@ -139,33 +134,38 @@
 	    context.putImageData(image, 0, 0);
 	  }
 	});
+      }
 
-	
-      });
-    }
+      drawing(resolution, sigma, zoom);
 
-    //Gaussian Distribution
-    function gaussian(cx, cy, x, y) {
-      var distance = Math.pow(x - cx, 2) + Math.pow(y - cy, 2);
-      return coefficient * Math.exp(-distance / constant);
-    }
-
-    //when click run, redraw the canvas
-    d3.select("#run").on("click", function() {
-      var tmp_resolution = parseInt(document.querySelector("#resolution").value);
-      var tmp_sigma = parseInt(document.querySelector("#sigma").value);
-      if(tmp_resolution != resolution || tmp_sigma != sigma) {
-        resolution = tmp_resolution;
-	sigma = tmp_sigma;
-	d3.selectAll("canvas").remove(); for(var i = 1; i <= CHR_NUMBER; i++) {
-	  for(var j = 1; j <= CHR_NUMBER; j++) {
-	    draw_block(j , i);
-	  }
+      d3.select("#resolution").on("change", function() {
+	d3.selectAll(".sigma_value").remove();
+	d3.select("#sigma").append("option").attr("value", "1").attr("class", "sigma_value").text("1");
+	var resolution = document.querySelector("#resolution").value;
+	for(var i = 5; i <= resolution; i = i + 5) {
+	  d3.select("#sigma").append("option").attr("value", i).attr("class", "sigma_value").text(i);
 	}
-      }
-      else {
-      }
-      
-    });
+	resolution = parseInt(document.querySelector("#resolution").value);
+	sigma = parseInt(document.querySelector("#sigma").value);
+	d3.selectAll("canvas").remove(); 
+	drawing(resolution, sigma, zoom);
+      });
 
-  </script>
+      d3.select("#sigma").on("change", function() {
+	resolution = parseInt(document.querySelector("#resolution").value);
+	sigma = parseInt(document.querySelector("#sigma").value);
+	d3.selectAll("canvas").remove(); 
+	drawing(resolution, sigma, zoom);
+      });
+
+      d3.select("#color-adjust").on("change", function() {
+	var resolution = document.querySelector("#resolution").value;
+	var sigma = document.querySelector("#sigma").value;
+	zoom = document.querySelector("#color-adjust").value / 100;
+	d3.selectAll("canvas").remove();  
+	drawing(resolution, sigma, zoom);
+      });
+
+    </script>
+  </body>
+</html>
