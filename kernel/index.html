@@ -56,13 +56,16 @@
       .style("background-color", "#111")
       .style("top", "0")
       .style("z-index", "100")
-      .append("svg");
+      .append("svg")
+      .attr("width", size * 20);
       var x_axis = header.append("g").attr("id", "x-axis");
       var container = d3.select("#container")
       .style("height", (CHR_NUMBER + 1) * size + "px")
       .style("width", window.innerWidth * 0.8 + "px")
       .style("margin-top", (size * 0.75) + "px")
-      var y_axis = container.append("svg").append("g").attr("id", "y-axis");
+      var y_axis = container.append("svg")
+      .attr("height", size * 20)
+      .append("g").attr("id", "y-axis");
 
       //Draw the axis
       var chr_color = d3.scale.category20b();
