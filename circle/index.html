@@ -10,15 +10,15 @@
   <body>
     <div id="page">
       <div id="circle"></div>
-      <div id="tablet" style="float:right; width:320px; ">
-	<div id="mode_tablet">
-	  <p class="block_title">Mode</p><hr />
-	  <div style="margin: 20px 0px 0px 10px;">
-	    <input type="radio" name="mode" onclick="more_one()" checked="checked" />Multiple linking
-	  </div>
-	  <div style="margin: 10px 0px 0px 10px;">
-	    <input type="radio" name="mode" onclick="only_one()" />Only one-to-one linking
-	  </div>
+        <div id="tablet" style="float:right; width:320px; ">
+	        <div id="mode_tablet">
+	          <p class="block_title">Mode</p><hr />
+	          <div style="margin: 20px 0px 0px 10px;">
+	            <input type="radio" name="mode" onclick="more_one()" checked="checked" />Multiple linking
+	          </div>
+            <div style="margin: 10px 0px 0px 10px;">
+              <input type="radio" name="mode" onclick="only_one()" />Only one-to-one linking
+            </div>
 	</div>
 	<div id="chr_select_tablet">
 	  <p class="block_title">Select Chromosomes</p><hr />
@@ -86,7 +86,7 @@
       var chr_length = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
       //The foundation of the circle layout
-      var canvas = d3.select("#circle").append("svg");
+      var canvas = d3.select("#circle").append("svg").attr("width", outer_radius*2.3+320).attr("height", outer_radius*2.3);
       var group = canvas.append("g").attr("transform","translate(" + circle_horizontal_shift + ", " + circle_vertical_shift +")");
       var pie = d3.layout.pie().value(function(d, i) { return d; }).sort(null); 
       var arc = d3.svg.arc().innerRadius(inner_radius).outerRadius(outer_radius);
